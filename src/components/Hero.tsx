@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Sparkles, Home } from "lucide-react";
+import { Sparkles, Home, Gift, Star } from "lucide-react";
 import heroImage from "@/assets/hero-beauty.jpg";
 
 const Hero = () => {
@@ -22,11 +22,23 @@ const Hero = () => {
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-32 mt-20">
-        <div className="max-w-3xl animate-slide-up">
-          <div className="flex items-center gap-2 mb-6">
-            <Home className="h-6 w-6 text-gold" />
-            <span className="text-gold font-semibold text-lg">Doorstep Beauty Services</span>
+        <div className="max-w-3xl">
+          {/* Promotional Banner */}
+          <div className="mb-8 animate-fade-in">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full gradient-gold shadow-glow border-2 border-white/20 backdrop-blur-sm">
+              <Gift className="h-5 w-5 animate-pulse" />
+              <span className="font-semibold text-foreground">
+                Limited Time Offer - 20% OFF on First Booking!
+              </span>
+              <Star className="h-4 w-4 fill-current text-foreground animate-pulse" />
+            </div>
           </div>
+
+          <div className="animate-slide-up">
+            <div className="flex items-center gap-2 mb-6">
+              <Home className="h-6 w-6 text-gold" />
+              <span className="text-gold font-semibold text-lg">Doorstep Beauty Services</span>
+            </div>
           
           <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6 text-white leading-tight">
             Luxury Beauty
@@ -39,26 +51,27 @@ const Hero = () => {
             Expert hair styling, makeup, skincare, and bridal packages tailored just for you.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              size="lg"
-              className="gradient-gold shadow-glow text-lg px-8 py-6"
-              onClick={scrollToContact}
-            >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Book Your Appointment
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-foreground text-lg px-8 py-6"
-              onClick={() => {
-                const element = document.getElementById("services");
-                element?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              Explore Services
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                size="lg"
+                className="gradient-gold shadow-glow text-lg px-8 py-6"
+                onClick={scrollToContact}
+              >
+                <Sparkles className="mr-2 h-5 w-5" />
+                Book Your Appointment
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-foreground text-lg px-8 py-6"
+                onClick={() => {
+                  const element = document.getElementById("services");
+                  element?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Explore Services
+              </Button>
+            </div>
           </div>
         </div>
       </div>
