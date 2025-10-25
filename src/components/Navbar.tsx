@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Search, User, Heart } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,91 +12,153 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-soft">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <h1 className="text-2xl font-playfair font-bold text-gradient-primary">
-            Kuku's Beauty Parlour
-          </h1>
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-white/10">
+      {/* Top Bar */}
+      <div className="border-b border-white/10">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <h1 className="text-2xl font-playfair font-bold text-white tracking-wide">
+              KUKU'S BEAUTY PARLOUR
+            </h1>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
+            {/* Right Icons & CTA */}
+            <div className="hidden md:flex items-center gap-4">
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Search">
+                <Search className="h-5 w-5" />
+              </button>
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Profile">
+                <User className="h-5 w-5" />
+              </button>
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Wishlist">
+                <Heart className="h-5 w-5" />
+              </button>
+              <Button 
+                className="gradient-gold shadow-glow ml-2"
+                onClick={() => scrollToSection("contact")}
+              >
+                BOOK APPOINTMENT
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden text-white"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Menu */}
+      <div className="hidden md:block bg-black/95">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-center gap-8 h-14">
             <button
               onClick={() => scrollToSection("services")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
             >
-              Services
+              SERVICES
+            </button>
+            <button
+              onClick={() => scrollToSection("services")}
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
+            >
+              BRIDAL
+            </button>
+            <button
+              onClick={() => scrollToSection("services")}
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
+            >
+              OFFERS
             </button>
             <button
               onClick={() => scrollToSection("about")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
             >
-              About
+              ABOUT
             </button>
             <button
               onClick={() => scrollToSection("testimonials")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
             >
-              Testimonials
+              TESTIMONIALS
             </button>
             <button
               onClick={() => scrollToSection("contact")}
-              className="text-foreground hover:text-primary transition-colors"
+              className="text-white hover:text-gold transition-colors text-sm font-medium tracking-wide"
             >
-              Contact
+              CONTACT
             </button>
-            <Button className="gradient-gold shadow-glow">
-              <Phone className="mr-2 h-4 w-4" />
-              Book Appointment
-            </Button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-foreground"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden pb-6 animate-fade-in">
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-black border-t border-white/10">
+          <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col gap-4">
               <button
                 onClick={() => scrollToSection("services")}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="text-white hover:text-gold transition-colors text-left font-medium"
               >
-                Services
+                SERVICES
+              </button>
+              <button
+                onClick={() => scrollToSection("services")}
+                className="text-white hover:text-gold transition-colors text-left font-medium"
+              >
+                BRIDAL
+              </button>
+              <button
+                onClick={() => scrollToSection("services")}
+                className="text-white hover:text-gold transition-colors text-left font-medium"
+              >
+                OFFERS
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="text-white hover:text-gold transition-colors text-left font-medium"
               >
-                About
+                ABOUT
               </button>
               <button
                 onClick={() => scrollToSection("testimonials")}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="text-white hover:text-gold transition-colors text-left font-medium"
               >
-                Testimonials
+                TESTIMONIALS
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="text-foreground hover:text-primary transition-colors text-left"
+                className="text-white hover:text-gold transition-colors text-left font-medium"
               >
-                Contact
+                CONTACT
               </button>
-              <Button className="gradient-gold w-full shadow-glow">
-                <Phone className="mr-2 h-4 w-4" />
-                Book Appointment
+              <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Search">
+                  <Search className="h-5 w-5" />
+                </button>
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Profile">
+                  <User className="h-5 w-5" />
+                </button>
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Wishlist">
+                  <Heart className="h-5 w-5" />
+                </button>
+              </div>
+              <Button 
+                className="gradient-gold w-full shadow-glow"
+                onClick={() => scrollToSection("contact")}
+              >
+                BOOK APPOINTMENT
               </Button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };
