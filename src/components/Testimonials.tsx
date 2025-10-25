@@ -1,0 +1,71 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { Star } from "lucide-react";
+
+const testimonials = [
+  {
+    name: "Priya Sharma",
+    service: "Bridal Package",
+    rating: 5,
+    text: "Kuku's team made my wedding day absolutely perfect! The bridal makeup and hairstyling were flawless. The convenience of having them come to my home was priceless.",
+  },
+  {
+    name: "Anita Desai",
+    service: "Skincare & Facial",
+    rating: 5,
+    text: "The facial treatment was so relaxing and my skin has never looked better! The beautician was professional and used amazing products. Highly recommend!",
+  },
+  {
+    name: "Meera Patel",
+    service: "Hair Styling",
+    rating: 5,
+    text: "I love the convenience of doorstep service! The hair color came out exactly as I wanted. Will definitely book again for my next party.",
+  },
+  {
+    name: "Kavya Singh",
+    service: "Makeup & Hair",
+    rating: 5,
+    text: "Professional, punctual, and talented! My party makeup and hairstyle received so many compliments. Thank you Kuku's for making me feel beautiful!",
+  },
+];
+
+const Testimonials = () => {
+  return (
+    <section id="testimonials" className="py-24 bg-background">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16 animate-slide-up">
+          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+            What Our <span className="text-gradient-primary">Clients Say</span>
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Don't just take our word for it - hear from our happy customers
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <Card
+              key={index}
+              className="border-border shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <CardContent className="p-6">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-gold text-gold" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground mb-6 italic">"{testimonial.text}"</p>
+                <div>
+                  <p className="font-bold text-foreground">{testimonial.name}</p>
+                  <p className="text-sm text-primary">{testimonial.service}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Testimonials;
