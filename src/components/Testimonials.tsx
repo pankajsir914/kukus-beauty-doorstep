@@ -30,13 +30,13 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="testimonials" className="py-24 bg-background">
+    <section id="testimonials" className="py-28 bg-gradient-to-b from-soft-pink/20 to-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+        <div className="text-center mb-20 animate-slide-up">
+          <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6 decorative-line">
             What Our <span className="text-gradient-primary">Clients Say</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Don't just take our word for it - hear from our happy customers
           </p>
         </div>
@@ -45,19 +45,22 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="border-border shadow-soft hover:shadow-medium transition-all duration-300 animate-slide-up"
+              className="border-2 border-primary/10 hover:border-primary/30 hover-lift animate-slide-up relative overflow-hidden"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <CardContent className="p-6">
-                <div className="flex gap-1 mb-4">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-primary opacity-10 rounded-bl-full" />
+              <CardContent className="p-8 relative">
+                <div className="flex gap-1 mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-gold text-gold" />
+                    <Star key={i} className="h-5 w-5 fill-champagne text-champagne drop-shadow-sm" />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-6 italic">"{testimonial.text}"</p>
-                <div>
-                  <p className="font-bold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-primary">{testimonial.service}</p>
+                <p className="text-muted-foreground mb-8 italic leading-relaxed text-base">
+                  "{testimonial.text}"
+                </p>
+                <div className="border-t border-primary/10 pt-4">
+                  <p className="font-bold text-foreground text-lg">{testimonial.name}</p>
+                  <p className="text-sm text-primary font-medium mt-1">{testimonial.service}</p>
                 </div>
               </CardContent>
             </Card>

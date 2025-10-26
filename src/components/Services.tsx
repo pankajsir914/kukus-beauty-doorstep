@@ -34,13 +34,13 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="py-24 bg-background">
+    <section id="services" className="py-28 bg-gradient-to-b from-background to-soft-pink/20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-slide-up">
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+        <div className="text-center mb-20 animate-slide-up">
+          <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6 decorative-line">
             Our <span className="text-gradient-primary">Services</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Discover our range of premium beauty services, all available at your doorstep
           </p>
         </div>
@@ -51,27 +51,33 @@ const Services = () => {
             return (
               <Card
                 key={index}
-                className="group overflow-hidden border-border hover:border-primary transition-all duration-500 shadow-soft hover:shadow-medium animate-slide-up"
+                className="group overflow-hidden border-2 border-transparent hover:border-primary/30 transition-all duration-500 hover-lift animate-slide-up cursor-pointer"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-72 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Icon className="h-6 w-6 text-gold" />
-                      <h3 className="text-xl font-playfair font-bold text-white">
+                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy/90 via-plum/40 to-transparent" />
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="p-2 rounded-full bg-champagne/20 backdrop-blur-sm">
+                        <Icon className="h-6 w-6 text-champagne" />
+                      </div>
+                      <h3 className="text-2xl font-playfair font-bold text-white">
                         {service.title}
                       </h3>
                     </div>
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground">{service.description}</p>
+                <CardContent className="p-6 bg-gradient-to-b from-card to-soft-pink/30">
+                  <p className="text-muted-foreground leading-relaxed">{service.description}</p>
+                  <div className="mt-4 flex items-center text-primary font-semibold text-sm group-hover:text-primary-light transition-colors">
+                    Learn More →
+                  </div>
                 </CardContent>
               </Card>
             );

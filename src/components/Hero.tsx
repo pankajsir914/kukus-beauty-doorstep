@@ -93,7 +93,7 @@ const Hero = () => {
                   backgroundImage: `url(${slide.image})`,
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-burgundy/40 to-transparent" />
               </div>
 
               {/* Content */}
@@ -101,9 +101,9 @@ const Hero = () => {
                 <div className="max-w-3xl pt-20">
                   {/* Doorstep Badge */}
                   <div className="mb-8 animate-fade-in">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
-                      <Home className="h-4 w-4 text-gold" />
-                      <span className="text-white font-semibold text-sm">
+                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-card">
+                      <Home className="h-5 w-5 text-champagne" />
+                      <span className="text-white font-semibold text-sm tracking-wide">
                         Doorstep Beauty Services
                       </span>
                     </div>
@@ -118,8 +118,8 @@ const Hero = () => {
 
                     {/* Promotional Banner Box */}
                     <div className="mb-8">
-                      <div className="inline-block px-8 py-4 bg-gradient-to-r from-gold/90 to-rose-gold/90 backdrop-blur-sm rounded-lg shadow-glow">
-                        <p className="text-2xl md:text-3xl font-bold text-white">
+                      <div className="inline-block px-8 py-4 gradient-gold rounded-xl shadow-glow-gold">
+                        <p className="text-2xl md:text-3xl font-bold text-white tracking-wide">
                           {slide.banner}
                         </p>
                       </div>
@@ -128,7 +128,8 @@ const Hero = () => {
                     <div className="flex flex-col sm:flex-row gap-4">
                       <Button
                         size="lg"
-                        className="gradient-gold shadow-glow text-lg px-8 py-6 hover:scale-105 transition-transform"
+                        variant="premium"
+                        className="text-lg px-10 py-7 font-semibold tracking-wide"
                         onClick={scrollToContact}
                       >
                         <Sparkles className="mr-2 h-5 w-5" />
@@ -136,8 +137,8 @@ const Hero = () => {
                       </Button>
                       <Button
                         size="lg"
-                        variant="outline"
-                        className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-foreground text-lg px-8 py-6"
+                        variant="glass"
+                        className="text-lg px-10 py-7 font-semibold"
                         onClick={() => {
                           const element = document.getElementById("services");
                           element?.scrollIntoView({ behavior: "smooth" });
@@ -156,27 +157,27 @@ const Hero = () => {
         {/* Custom Navigation Arrows */}
         <button
           onClick={() => api?.scrollPrev()}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-7 w-7" />
         </button>
         <button
           onClick={() => api?.scrollNext()}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-white hover:bg-white/30 transition-all"
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-7 w-7" />
         </button>
 
         {/* Dots Navigation */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
           {Array.from({ length: count }).map((_, index) => (
             <button
               key={index}
               onClick={() => api?.scrollTo(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
+              className={`rounded-full transition-all duration-300 ${
                 index === current
-                  ? "bg-gold w-8"
-                  : "bg-white/50 hover:bg-white/70"
+                  ? "bg-champagne w-10 h-3 shadow-glow-gold"
+                  : "bg-white/50 hover:bg-white/80 w-3 h-3"
               }`}
             />
           ))}

@@ -2,41 +2,41 @@ import { Facebook, Instagram, Twitter, Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border py-12">
+    <footer className="bg-gradient-to-b from-card to-soft-pink/20 border-t-2 border-primary/10 py-16">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-12">
           {/* About */}
           <div>
-            <h3 className="text-2xl font-playfair font-bold text-gradient-primary mb-4">
+            <h3 className="text-3xl font-playfair font-bold text-gradient-gold mb-5">
               Kuku's Beauty Parlour
             </h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-muted-foreground leading-relaxed text-base mb-6">
               Bringing professional beauty services to your doorstep. Experience luxury, convenience, and excellence.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-foreground mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+            <h4 className="font-bold text-foreground text-lg mb-5">Quick Links</h4>
+            <ul className="space-y-3">
               <li>
-                <a href="#services" className="text-muted-foreground hover:text-primary transition-colors">
-                  Services
+                <a href="#services" className="text-muted-foreground hover:text-primary transition-all text-base hover:translate-x-1 inline-block">
+                  → Services
                 </a>
               </li>
               <li>
-                <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">
-                  About Us
+                <a href="#about" className="text-muted-foreground hover:text-primary transition-all text-base hover:translate-x-1 inline-block">
+                  → About Us
                 </a>
               </li>
               <li>
-                <a href="#testimonials" className="text-muted-foreground hover:text-primary transition-colors">
-                  Testimonials
+                <a href="#testimonials" className="text-muted-foreground hover:text-primary transition-all text-base hover:translate-x-1 inline-block">
+                  → Testimonials
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">
-                  Contact
+                <a href="#contact" className="text-muted-foreground hover:text-primary transition-all text-base hover:translate-x-1 inline-block">
+                  → Contact
                 </a>
               </li>
             </ul>
@@ -44,25 +44,25 @@ const Footer = () => {
 
           {/* Social Media */}
           <div>
-            <h4 className="font-bold text-foreground mb-4">Follow Us</h4>
+            <h4 className="font-bold text-foreground text-lg mb-5">Follow Us</h4>
             <div className="flex gap-4">
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all"
                 aria-label="Facebook"
               >
                 <Facebook className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all"
                 aria-label="Instagram"
               >
                 <Instagram className="h-5 w-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all"
                 aria-label="Twitter"
               >
                 <Twitter className="h-5 w-5" />
@@ -71,9 +71,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border text-center">
-          <p className="text-muted-foreground flex items-center justify-center gap-2">
-            Made with <Heart className="h-4 w-4 text-primary fill-primary" /> by Kuku's Beauty Parlour © 2025
+        <div className="pt-10 border-t-2 border-primary/10 text-center">
+          <p className="text-muted-foreground flex items-center justify-center gap-2 text-base">
+            Made with <Heart className="h-5 w-5 text-primary fill-primary animate-pulse" /> by Kuku's Beauty Parlour © 2025
           </p>
         </div>
       </div>

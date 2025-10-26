@@ -26,6 +26,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          light: "hsl(var(--primary-light))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -51,10 +52,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "deep-rose": "hsl(var(--deep-rose))",
         "rose-gold": "hsl(var(--rose-gold))",
+        champagne: "hsl(var(--champagne))",
         plum: "hsl(var(--plum))",
+        burgundy: "hsl(var(--burgundy))",
+        "soft-pink": "hsl(var(--soft-pink))",
+        cream: "hsl(var(--cream))",
         gold: "hsl(var(--gold))",
-        blush: "hsl(var(--blush))",
       },
       borderRadius: {
         lg: "var(--radius)",
