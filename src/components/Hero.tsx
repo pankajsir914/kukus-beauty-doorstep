@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Sparkles, Home, ChevronLeft, ChevronRight } from "lucide-react";
+import { Home, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -110,42 +109,13 @@ const Hero = () => {
                   </div>
 
                   <div className="animate-slide-up">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-4 text-white leading-tight">
-                      {slide.title}
-                      <br />
-                      <span className="text-gradient-gold">{slide.subtitle}</span>
-                    </h1>
-
                     {/* Promotional Banner Box */}
-                    <div className="mb-8">
+                    <div>
                       <div className="inline-block px-8 py-4 gradient-gold rounded-xl shadow-glow-gold">
                         <p className="text-2xl md:text-3xl font-bold text-white tracking-wide">
                           {slide.banner}
                         </p>
                       </div>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <Button
-                        size="lg"
-                        variant="premium"
-                        className="text-lg px-10 py-7 font-semibold tracking-wide"
-                        onClick={scrollToContact}
-                      >
-                        <Sparkles className="mr-2 h-5 w-5" />
-                        {slide.cta}
-                      </Button>
-                      <Button
-                        size="lg"
-                        variant="glass"
-                        className="text-lg px-10 py-7 font-semibold"
-                        onClick={() => {
-                          const element = document.getElementById("services");
-                          element?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                      >
-                        Explore All Services
-                      </Button>
                     </div>
                   </div>
                 </div>
