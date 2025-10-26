@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Search, User, Heart } from "lucide-react";
+import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,14 +24,14 @@ const Navbar = () => {
 
             {/* Right Icons & CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Search">
-                <Search className="h-5 w-5" />
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Facebook">
+                <Facebook className="h-5 w-5" />
               </button>
-              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Profile">
-                <User className="h-5 w-5" />
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
+                <Instagram className="h-5 w-5" />
               </button>
-              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Wishlist">
-                <Heart className="h-5 w-5" />
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Twitter">
+                <Twitter className="h-5 w-5" />
               </button>
               <Button 
                 className="gradient-gold shadow-glow ml-2"
@@ -139,14 +139,14 @@ const Navbar = () => {
                 CONTACT
               </button>
               <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Search">
-                  <Search className="h-5 w-5" />
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Facebook">
+                  <Facebook className="h-5 w-5" />
                 </button>
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Profile">
-                  <User className="h-5 w-5" />
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
+                  <Instagram className="h-5 w-5" />
                 </button>
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Wishlist">
-                  <Heart className="h-5 w-5" />
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Twitter">
+                  <Twitter className="h-5 w-5" />
                 </button>
               </div>
               <Button 
