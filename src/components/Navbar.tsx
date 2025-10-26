@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Facebook, Instagram, Twitter } from "lucide-react";
+import { Menu, X, Facebook, Instagram, User } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,8 +30,8 @@ const Navbar = () => {
               <button className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
               </button>
-              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
+              <button className="text-white hover:text-gold transition-colors p-2" aria-label="Account">
+                <User className="h-5 w-5" />
               </button>
               <Button 
                 className="gradient-gold shadow-glow ml-2"
@@ -145,8 +145,8 @@ const Navbar = () => {
                 <button className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
                   <Instagram className="h-5 w-5" />
                 </button>
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Twitter">
-                  <Twitter className="h-5 w-5" />
+                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Account">
+                  <User className="h-5 w-5" />
                 </button>
               </div>
               <Button 
