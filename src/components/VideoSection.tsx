@@ -4,10 +4,10 @@ const VideoSection = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   
   return (
-    <section className="py-20 bg-background" ref={elementRef}>
-      <div className="container mx-auto px-4">
-        <div className={`text-center mb-12 scroll-reveal ${isVisible ? 'visible' : ''}`}>
-          <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+    <section className="py-12 sm:py-16 md:py-20 bg-background" ref={elementRef}>
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className={`text-center mb-8 md:mb-12 scroll-reveal ${isVisible ? 'visible' : ''}`}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold mb-3 md:mb-4">
             Experience Our Services
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">

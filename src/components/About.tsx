@@ -63,11 +63,11 @@ const About = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   
   return (
-    <section id="about" className="py-24 bg-background" ref={elementRef}>
-      <div className="container mx-auto px-4">
+    <section id="about" className="py-16 sm:py-20 md:py-24 bg-background" ref={elementRef}>
+      <div className="container mx-auto px-3 sm:px-4">
         {/* Hero About Section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          <div className={`relative h-[500px] rounded-2xl overflow-hidden shadow-medium scroll-reveal-left ${isVisible ? 'visible' : ''}`}>
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
+          <div className={`relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-medium scroll-reveal-left ${isVisible ? 'visible' : ''}`}>
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop"
               alt="Professional Beauty Parlour"
@@ -80,7 +80,7 @@ const About = () => {
           </div>
           
           <div className={`scroll-reveal-right ${isVisible ? 'visible' : ''}`}>
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold mb-4 md:mb-6">
               About <span className="text-gradient-primary">Kuku's Beauty Parlour</span>
             </h2>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">

@@ -102,27 +102,27 @@ const Hero = () => {
         {/* Custom Navigation Arrows with enhanced animations */}
         <button
           onClick={() => api?.scrollPrev()}
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
+          className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
         >
-          <ChevronLeft className="h-7 w-7" />
+          <ChevronLeft className="h-5 w-5 md:h-7 md:w-7" />
         </button>
         <button
           onClick={() => api?.scrollNext()}
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
+          className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-14 md:h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
         >
-          <ChevronRight className="h-7 w-7" />
+          <ChevronRight className="h-5 w-5 md:h-7 md:w-7" />
         </button>
 
         {/* Dots Navigation */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+        <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-2 md:gap-3">
           {Array.from({ length: count }).map((_, index) => (
             <button
               key={index}
               onClick={() => api?.scrollTo(index)}
               className={`rounded-full transition-all duration-300 ${
                 index === current
-                  ? "bg-champagne w-10 h-3 shadow-glow-gold"
-                  : "bg-white/50 hover:bg-white/80 w-3 h-3"
+                  ? "bg-champagne w-6 md:w-10 h-2 md:h-3 shadow-glow-gold"
+                  : "bg-white/50 hover:bg-white/80 w-2 md:w-3 h-2 md:h-3"
               }`}
             />
           ))}

@@ -33,10 +33,10 @@ const Testimonials = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   
   return (
-    <section id="testimonials" className="py-28 bg-gradient-to-b from-soft-pink/20 to-background" ref={elementRef}>
-      <div className="container mx-auto px-4">
-        <div className={`text-center mb-20 scroll-reveal ${isVisible ? 'visible' : ''}`}>
-          <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6 decorative-line">
+    <section id="testimonials" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-soft-pink/20 to-background" ref={elementRef}>
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className={`text-center mb-12 md:mb-20 scroll-reveal ${isVisible ? 'visible' : ''}`}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-4 md:mb-6 decorative-line">
             What Our <span className="text-gradient-primary">Clients Say</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">

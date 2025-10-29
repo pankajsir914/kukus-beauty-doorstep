@@ -40,18 +40,18 @@ const Services = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section id="services" className="py-28 bg-gradient-to-b from-background to-soft-pink/20" ref={elementRef}>
-      <div className="container mx-auto px-4">
-        <div className={`text-center mb-20 scroll-reveal ${isVisible ? 'visible' : ''}`}>
-          <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6 decorative-line">
+    <section id="services" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-background to-soft-pink/20" ref={elementRef}>
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className={`text-center mb-12 md:mb-20 scroll-reveal ${isVisible ? 'visible' : ''}`}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-4 md:mb-6 decorative-line">
             Our <span className="text-gradient-primary">Services</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Discover our range of premium beauty services, all available at your doorstep
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -60,7 +60,7 @@ const Services = () => {
                 className={`group overflow-hidden border-2 border-transparent hover:border-primary/30 transition-all duration-500 hover-lift cursor-pointer card-3d-hover shimmer-effect scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                  <div className="relative h-72 overflow-hidden">
+                  <div className="relative h-56 sm:h-64 md:h-72 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.title}

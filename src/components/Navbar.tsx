@@ -27,7 +27,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
-            <h1 className="text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
+            <h1 className="text-lg sm:text-xl md:text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
               KUKU'S BEAUTY PARLOUR
             </h1>
 
