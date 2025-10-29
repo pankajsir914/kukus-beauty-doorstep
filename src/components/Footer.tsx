@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Twitter, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
@@ -40,6 +41,13 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+            <Button 
+              variant="outline"
+              className="mt-6 font-semibold tracking-wide"
+              onClick={() => window.location.href = "/auth"}
+            >
+              ADMIN LOGIN
+            </Button>
           </div>
 
           {/* Social Media */}

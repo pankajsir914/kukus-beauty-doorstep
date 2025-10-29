@@ -40,13 +40,6 @@ const Navbar = () => {
               >
                 BOOK APPOINTMENT
               </Button>
-              <Button 
-                variant="outline"
-                className="ml-2 font-semibold tracking-wide"
-                onClick={() => window.location.href = "/auth"}
-              >
-                ADMIN LOGIN
-              </Button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -162,13 +155,6 @@ const Navbar = () => {
                 onClick={() => scrollToSection("contact")}
               >
                 BOOK APPOINTMENT
-              </Button>
-              <Button 
-                variant="outline"
-                className="w-full"
-                onClick={() => window.location.href = "/auth"}
-              >
-                ADMIN LOGIN
               </Button>
             </div>
           </div>
