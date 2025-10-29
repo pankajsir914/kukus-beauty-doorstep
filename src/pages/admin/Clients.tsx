@@ -19,9 +19,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { ClientProfile } from "@/components/admin/ClientProfile";
 
 interface Client {
   id: string;
@@ -36,6 +37,8 @@ interface Client {
 export default function Clients() {
   const [clients, setClients] = useState<Client[]>([]);
   const [open, setOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [formData, setFormData] = useState({
     full_name: "",
@@ -128,6 +131,11 @@ export default function Clients() {
     setOpen(true);
   };
 
+  const handleViewProfile = (clientId: string) => {
+    setSelectedClientId(clientId);
+    setProfileOpen(true);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -218,6 +226,12 @@ export default function Clients() {
         </Dialog>
       </div>
 
+      <ClientProfile
+        clientId={selectedClientId}
+        open={profileOpen}
+        onOpenChange={setProfileOpen}
+      />
+
       <Card className="glass">
         <CardHeader>
           <CardTitle>All Clients</CardTitle>
@@ -245,7 +259,16 @@ export default function Clients() {
                       <Button
                         size="sm"
                         variant="ghost"
+                        onClick={() => handleViewProfile(client.id)}
+                        title="View Profile"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
                         onClick={() => handleEdit(client)}
+                        title="Edit"
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -253,6 +276,7 @@ export default function Clients() {
                         size="sm"
                         variant="ghost"
                         onClick={() => handleDelete(client.id)}
+                        title="Delete"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
