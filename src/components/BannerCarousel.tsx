@@ -6,8 +6,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 
 interface Banner {
   id: string;
@@ -20,10 +20,24 @@ interface Banner {
 
 const BannerCarousel = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
+  const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
     fetchBanners();
   }, []);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    // Auto-play functionality
+    const intervalId = setInterval(() => {
+      api.scrollNext();
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [api]);
 
   const fetchBanners = async () => {
     try {
@@ -72,15 +86,11 @@ const BannerCarousel = () => {
   return (
     <section className="container mx-auto px-4 py-8">
       <Carousel
+        setApi={setApi}
         opts={{
           align: "start",
           loop: true,
         }}
-        plugins={[
-          Autoplay({
-            delay: 5000,
-          }),
-        ]}
         className="w-full"
       >
         <CarouselContent>
