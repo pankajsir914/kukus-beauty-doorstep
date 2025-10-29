@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const testimonials = [
   {
@@ -29,10 +30,12 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
+  
   return (
-    <section id="testimonials" className="py-28 bg-gradient-to-b from-soft-pink/20 to-background">
+    <section id="testimonials" className="py-28 bg-gradient-to-b from-soft-pink/20 to-background" ref={elementRef}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-20 animate-slide-up">
+        <div className={`text-center mb-20 scroll-reveal ${isVisible ? 'visible' : ''}`}>
           <h2 className="text-5xl md:text-6xl font-playfair font-bold mb-6 decorative-line">
             What Our <span className="text-gradient-primary">Clients Say</span>
           </h2>
@@ -45,14 +48,18 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card
               key={index}
-              className="border-2 border-primary/10 hover:border-primary/30 hover-lift animate-slide-up relative overflow-hidden"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`border-2 border-primary/10 hover:border-primary/30 hover-lift relative overflow-hidden glow-on-hover scroll-reveal-${index % 2 === 0 ? 'left' : 'right'} ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-primary opacity-10 rounded-bl-full" />
               <CardContent className="p-8 relative">
                 <div className="flex gap-1 mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 fill-champagne text-champagne drop-shadow-sm" />
+                    <Star 
+                      key={i} 
+                      className="h-5 w-5 fill-champagne text-champagne drop-shadow-sm star-animate transition-transform hover:scale-125" 
+                      style={{ animationDelay: `${i * 100}ms` }}
+                    />
                   ))}
                 </div>
                 <p className="text-muted-foreground mb-8 italic leading-relaxed text-base">

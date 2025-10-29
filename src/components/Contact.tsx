@@ -133,7 +133,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="bg-background"
+                    className="bg-background input-focus transition-all"
                   />
                 </div>
                 <div>
@@ -144,7 +144,7 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="bg-background"
+                    className="bg-background input-focus transition-all"
                   />
                 </div>
                 <div>
@@ -154,7 +154,7 @@ const Contact = () => {
                     value={formData.service}
                     onChange={handleChange}
                     required
-                    className="bg-background"
+                    className="bg-background input-focus transition-all"
                   />
                 </div>
                 <div>
@@ -164,14 +164,14 @@ const Contact = () => {
                     value={formData.message}
                     onChange={handleChange}
                     rows={4}
-                    className="bg-background"
+                    className="bg-background input-focus transition-all"
                   />
                 </div>
                 <Button 
                   type="submit" 
                   variant="premium" 
                   size="lg" 
-                  className="w-full font-semibold text-lg"
+                  className="w-full font-semibold text-lg ripple glow-on-hover transition-all hover:scale-105"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Submitting..." : "Book Appointment"}

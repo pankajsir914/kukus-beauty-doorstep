@@ -7,6 +7,7 @@ import {
 import { type CarouselApi } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 interface Banner {
   id: string;
@@ -84,30 +85,30 @@ const Hero = () => {
         <CarouselContent className="h-screen">
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id} className="relative h-screen">
-              {/* Background Image */}
+              {/* Background Image with Ken Burns effect */}
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-[8000ms] ease-out hover:scale-110"
                 style={{
                   backgroundImage: banner.image_url ? `url(${banner.image_url})` : 'none',
                   backgroundColor: banner.image_url ? 'transparent' : '#1a1a1a'
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 animate-fade-in" />
               </div>
             </CarouselItem>
           ))}
         </CarouselContent>
 
-        {/* Custom Navigation Arrows */}
+        {/* Custom Navigation Arrows with enhanced animations */}
         <button
           onClick={() => api?.scrollPrev()}
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110"
+          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
         >
           <ChevronLeft className="h-7 w-7" />
         </button>
         <button
           onClick={() => api?.scrollNext()}
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110"
+          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full glass-card flex items-center justify-center text-white hover:bg-white/30 transition-all hover:scale-110 glow-on-hover ripple animate-fade-in"
         >
           <ChevronRight className="h-7 w-7" />
         </button>

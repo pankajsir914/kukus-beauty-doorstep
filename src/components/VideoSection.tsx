@@ -1,8 +1,12 @@
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+
 const VideoSection = () => {
+  const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
+  
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background" ref={elementRef}>
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12 animate-fade-in">
+        <div className={`text-center mb-12 scroll-reveal ${isVisible ? 'visible' : ''}`}>
           <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
             Experience Our Services
           </h2>
@@ -30,7 +34,11 @@ const VideoSection = () => {
               src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
             }
           ].map((video, index) => (
-            <div key={index} className="relative aspect-[9/16] rounded-2xl overflow-hidden shadow-glow bg-black animate-fade-in">
+            <div 
+              key={index} 
+              className={`relative aspect-[9/16] rounded-2xl overflow-hidden shadow-glow bg-black hover:scale-105 hover:shadow-glow-gold transition-all duration-500 glow-on-hover scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
               <video
                 className="w-full h-full object-cover"
                 controls

@@ -4,6 +4,7 @@ import bridalImg from "@/assets/service-bridal.jpg";
 import hairImg from "@/assets/service-hair.jpg";
 import makeupImg from "@/assets/service-makeup.jpg";
 import skincareImg from "@/assets/service-skincare.jpg";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const stats = [
   { number: "10+", label: "Years Experience" },
@@ -59,16 +60,18 @@ const expertise = [
 ];
 
 const About = () => {
+  const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
+  
   return (
-    <section id="about" className="py-24 bg-background">
+    <section id="about" className="py-24 bg-background" ref={elementRef}>
       <div className="container mx-auto px-4">
         {/* Hero About Section */}
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-medium animate-fade-in">
+          <div className={`relative h-[500px] rounded-2xl overflow-hidden shadow-medium scroll-reveal-left ${isVisible ? 'visible' : ''}`}>
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop"
               alt="Professional Beauty Parlour"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
@@ -76,7 +79,7 @@ const About = () => {
             </div>
           </div>
           
-          <div className="animate-slide-up">
+          <div className={`scroll-reveal-right ${isVisible ? 'visible' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-6">
               About <span className="text-gradient-primary">Kuku's Beauty Parlour</span>
             </h2>
@@ -102,8 +105,8 @@ const About = () => {
           {stats.map((stat, index) => (
             <Card
               key={index}
-              className="text-center border-0 shadow-medium gradient-gold animate-slide-up"
-              style={{ animationDelay: `${index * 100}ms` }}
+              className={`text-center border-0 shadow-medium gradient-gold scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
               <CardContent className="p-8">
                 <div className="text-4xl md:text-5xl font-playfair font-bold text-white mb-2">
@@ -132,8 +135,8 @@ const About = () => {
               return (
                 <Card
                   key={index}
-                  className="text-center border-border shadow-soft hover:shadow-glow hover:scale-105 transition-all duration-500 animate-slide-up group"
-                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={`text-center border-border shadow-soft hover:shadow-glow hover:scale-105 transition-all duration-500 group card-3d-hover scroll-reveal ${isVisible ? 'visible' : ''}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-8">
                     <div className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary mb-6 group-hover:scale-110 transition-transform duration-500">
@@ -163,13 +166,13 @@ const About = () => {
             {expertise.map((service, index) => (
               <div
                 key={index}
-                className="group relative h-80 rounded-2xl overflow-hidden shadow-medium hover:shadow-glow transition-all duration-500 animate-fade-in cursor-pointer"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`group relative h-80 rounded-2xl overflow-hidden shadow-medium hover:shadow-glow transition-all duration-500 cursor-pointer card-3d-hover glow-on-hover scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
                 <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">

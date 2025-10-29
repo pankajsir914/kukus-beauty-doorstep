@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Facebook, Instagram, User } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -12,31 +21,32 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 shadow-strong">
+    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${scrolled ? 'bg-black/98 shadow-strong' : 'bg-black/90 shadow-medium'}`}>
       {/* Top Bar */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
-            <h1 className="text-2xl font-playfair font-bold text-gradient-gold tracking-wide">
+            <h1 className="text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
               KUKU'S BEAUTY PARLOUR
             </h1>
 
             {/* Right Icons & CTA */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110" aria-label="Facebook">
+              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110 hover:rotate-12 animate-fade-in" aria-label="Facebook" style={{ animationDelay: '100ms' }}>
                 <Facebook className="h-5 w-5" />
               </button>
-              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110" aria-label="Instagram">
+              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110 hover:rotate-12 animate-fade-in" aria-label="Instagram" style={{ animationDelay: '200ms' }}>
                 <Instagram className="h-5 w-5" />
               </button>
-              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110" aria-label="Account">
+              <button className="text-white hover:text-champagne transition-all p-2 hover:scale-110 hover:rotate-12 animate-fade-in" aria-label="Account" style={{ animationDelay: '300ms' }}>
                 <User className="h-5 w-5" />
               </button>
               <Button 
                 variant="premium"
-                className="ml-2 font-semibold tracking-wide"
+                className="ml-2 font-semibold tracking-wide ripple glow-on-hover animate-pulse-glow animate-fade-in"
                 onClick={() => scrollToSection("contact")}
+                style={{ animationDelay: '400ms' }}
               >
                 BOOK APPOINTMENT
               </Button>
@@ -100,7 +110,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-black border-t border-white/10">
+        <div className="md:hidden bg-black border-t border-white/10 animate-slide-from-bottom">
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col gap-4">
               <button
