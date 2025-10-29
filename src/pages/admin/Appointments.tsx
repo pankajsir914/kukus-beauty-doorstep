@@ -56,6 +56,8 @@ export default function Appointments() {
   const [services, setServices] = useState<Service[]>([]);
   const [open, setOpen] = useState(false);
   const [editingAppointment, setEditingAppointment] = useState<Appointment | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [formData, setFormData] = useState({
     client_id: "",
     service_id: "",
@@ -180,6 +182,18 @@ export default function Appointments() {
     setOpen(true);
   };
 
+  // Filter appointments based on search and status
+  const filteredAppointments = appointments.filter((appointment) => {
+    const matchesSearch = 
+      appointment.clients.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      appointment.services.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      appointment.notes?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === "all" || appointment.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -302,6 +316,31 @@ export default function Appointments() {
           <CardTitle>All Appointments</CardTitle>
         </CardHeader>
         <CardContent>
+          {/* Search and Filter Section */}
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            <div className="flex-1">
+              <Input
+                placeholder="Search by client name, service, or notes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full"
+              />
+            </div>
+            <div className="w-full md:w-48">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Filter by status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Status</SelectItem>
+                  <SelectItem value="scheduled">Scheduled</SelectItem>
+                  <SelectItem value="confirmed">Confirmed</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <Table>
             <TableHeader>
               <TableRow>
@@ -313,7 +352,14 @@ export default function Appointments() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {appointments.map((appointment) => (
+              {filteredAppointments.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    No appointments found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredAppointments.map((appointment) => (
                 <TableRow key={appointment.id}>
                   <TableCell className="font-medium">
                     {appointment.clients.full_name}
@@ -356,7 +402,8 @@ export default function Appointments() {
                     </div>
                   </TableCell>
                 </TableRow>
-              ))}
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
