@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus, Pencil, Trash2, Image as ImageIcon, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, Image as ImageIcon, ExternalLink, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 interface Banner {
@@ -40,10 +40,13 @@ const Banners = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [editingBanner, setEditingBanner] = useState<Banner | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    image_url: "",
     link_url: "",
     priority: "0",
     is_active: true,
@@ -71,19 +74,54 @@ const Banners = () => {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+    }
+  };
+
+  const uploadImage = async (file: File): Promise<string> => {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+    const filePath = fileName;
+
+    const { error: uploadError } = await supabase.storage
+      .from('banners')
+      .upload(filePath, file);
+
+    if (uploadError) throw uploadError;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('banners')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const bannerData = {
-      title: formData.title,
-      description: formData.description || null,
-      image_url: formData.image_url || null,
-      link_url: formData.link_url || null,
-      priority: parseInt(formData.priority) || 0,
-      is_active: formData.is_active,
-    };
+    setUploading(true);
 
     try {
+      let imageUrl = editingBanner?.image_url || null;
+
+      // Upload new image if selected
+      if (selectedFile) {
+        imageUrl = await uploadImage(selectedFile);
+      }
+
+      const bannerData = {
+        title: formData.title,
+        description: formData.description || null,
+        image_url: imageUrl,
+        link_url: formData.link_url || null,
+        priority: parseInt(formData.priority) || 0,
+        is_active: formData.is_active,
+      };
+
       if (editingBanner) {
         const { error } = await supabase
           .from("banners")
@@ -106,6 +144,8 @@ const Banners = () => {
     } catch (error: any) {
       toast.error(editingBanner ? "Error updating banner" : "Error creating banner");
       console.error(error);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -132,11 +172,12 @@ const Banners = () => {
     setFormData({
       title: banner.title,
       description: banner.description || "",
-      image_url: banner.image_url || "",
       link_url: banner.link_url || "",
       priority: banner.priority.toString(),
       is_active: banner.is_active,
     });
+    setPreviewUrl(banner.image_url || "");
+    setSelectedFile(null);
     setOpen(true);
   };
 
@@ -144,12 +185,16 @@ const Banners = () => {
     setFormData({
       title: "",
       description: "",
-      image_url: "",
       link_url: "",
       priority: "0",
       is_active: true,
     });
     setEditingBanner(null);
+    setSelectedFile(null);
+    setPreviewUrl("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     setOpen(false);
   };
 
@@ -205,17 +250,42 @@ const Banners = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="image_url">Image URL</Label>
-                <Input
-                  id="image_url"
-                  type="url"
-                  placeholder="https://example.com/image.jpg"
-                  value={formData.image_url}
-                  onChange={(e) =>
-                    setFormData({ ...formData, image_url: e.target.value })
-                  }
-                  className="bg-background"
-                />
+                <Label htmlFor="banner-image">Banner Image *</Label>
+                <div className="space-y-4">
+                  {previewUrl && (
+                    <div className="relative w-full h-48 border rounded-lg overflow-hidden">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <Input
+                      ref={fileInputRef}
+                      id="banner-image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-full"
+                    >
+                      <Upload className="mr-2 h-4 w-4" />
+                      {selectedFile ? selectedFile.name : editingBanner ? "Change Image" : "Upload Image"}
+                    </Button>
+                  </div>
+                  {!editingBanner && !selectedFile && (
+                    <p className="text-xs text-muted-foreground">
+                      Please upload an image for the banner
+                    </p>
+                  )}
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -262,10 +332,15 @@ const Banners = () => {
               </div>
 
               <div className="flex gap-2 pt-4">
-                <Button type="submit" variant="premium" className="flex-1">
-                  {editingBanner ? "Update" : "Create"} Banner
+                <Button 
+                  type="submit" 
+                  variant="premium" 
+                  className="flex-1"
+                  disabled={uploading || (!editingBanner && !selectedFile)}
+                >
+                  {uploading ? "Uploading..." : editingBanner ? "Update" : "Create"} Banner
                 </Button>
-                <Button type="button" variant="outline" onClick={resetForm}>
+                <Button type="button" variant="outline" onClick={resetForm} disabled={uploading}>
                   Cancel
                 </Button>
               </div>
