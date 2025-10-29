@@ -92,30 +92,7 @@ const Hero = () => {
                   backgroundColor: banner.image_url ? 'transparent' : '#1a1a1a'
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-burgundy/40 to-transparent" />
-              </div>
-
-              {/* Content */}
-              <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-                <div className="max-w-4xl pt-20">
-                  <div className="animate-slide-up space-y-6">
-                    {/* Banner Title */}
-                    <div className="inline-block px-8 py-6 gradient-gold rounded-xl shadow-glow-gold">
-                      <h2 className="text-3xl md:text-5xl font-bold text-white tracking-wide font-playfair">
-                        {banner.title}
-                      </h2>
-                    </div>
-
-                    {/* Banner Description */}
-                    {banner.description && (
-                      <div className="inline-block px-8 py-4 glass-card rounded-xl">
-                        <p className="text-xl md:text-2xl text-white/90 font-medium">
-                          {banner.description}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
             </CarouselItem>
           ))}
