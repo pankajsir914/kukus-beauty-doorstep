@@ -33,7 +33,6 @@ const contactInfo = [
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
     service: "",
     message: "",
@@ -47,7 +46,6 @@ const Contact = () => {
     try {
       const { error } = await supabase.from("leads").insert({
         full_name: formData.name,
-        email: formData.email,
         phone: formData.phone,
         service_interested: formData.service,
         message: formData.message,
@@ -57,7 +55,7 @@ const Contact = () => {
       if (error) throw error;
 
       toast.success("Thank you! We'll contact you soon to confirm your appointment.");
-      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+      setFormData({ name: "", phone: "", service: "", message: "" });
     } catch (error: any) {
       toast.error("Failed to submit. Please try again or call us directly.");
       console.error("Error submitting lead:", error);
@@ -133,17 +131,6 @@ const Contact = () => {
                     name="name"
                     placeholder="Your Name"
                     value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="bg-background"
-                  />
-                </div>
-                <div>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Your Email"
-                    value={formData.email}
                     onChange={handleChange}
                     required
                     className="bg-background"
