@@ -1,30 +1,50 @@
-import { Home, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { type CarouselApi } from "@/components/ui/carousel";
 import { useState, useEffect } from "react";
-import heroImage from "@/assets/hero-beauty.jpg";
-import bridalImage from "@/assets/service-bridal.jpg";
-import hairImage from "@/assets/service-hair.jpg";
-import makeupImage from "@/assets/service-makeup.jpg";
+import { supabase } from "@/integrations/supabase/client";
+
+interface Banner {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  link_url: string | null;
+  priority: number;
+}
 
 const Hero = () => {
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
+  const [banners, setBanners] = useState<Banner[]>([]);
 
-  const scrollToContact = () => {
-    const element = document.getElementById("contact");
-    element?.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => {
+    fetchBanners();
+  }, []);
+
+  const fetchBanners = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("banners")
+        .select("*")
+        .eq("is_active", true)
+        .order("priority", { ascending: false })
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setBanners(data || []);
+    } catch (error) {
+      console.error("Error fetching banners:", error);
+    }
   };
 
   useEffect(() => {
-    if (!api) return;
+    if (!api || banners.length === 0) return;
 
     setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap());
@@ -39,38 +59,17 @@ const Hero = () => {
     }, 5000);
 
     return () => clearInterval(autoplay);
-  }, [api]);
+  }, [api, banners.length]);
 
-  const slides = [
-    {
-      image: bridalImage,
-      title: "Expert Curated Pre-Bridal Rituals",
-      subtitle: "For Bridal Radiance",
-      banner: "PRE-BRIDAL PACKAGES STARTING AT ₹3999*",
-      cta: "Book Your Appointment",
-    },
-    {
-      image: heroImage,
-      title: "Luxury Beauty Services",
-      subtitle: "At Your Doorstep",
-      banner: "LIMITED TIME OFFER - 20% OFF First Booking!",
-      cta: "Book Your Appointment",
-    },
-    {
-      image: hairImage,
-      title: "Professional Hair Styling",
-      subtitle: "Transform Your Look",
-      banner: "PREMIUM HAIR PACKAGES FROM ₹1999*",
-      cta: "Explore Hair Services",
-    },
-    {
-      image: makeupImage,
-      title: "Flawless Makeup Artistry",
-      subtitle: "For Every Occasion",
-      banner: "SPECIAL MAKEUP PACKAGES FROM ₹2499*",
-      cta: "View Makeup Services",
-    },
-  ];
+  if (banners.length === 0) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-soft-pink/20">
+        <div className="text-center">
+          <h2 className="text-4xl font-playfair font-bold text-muted-foreground">Loading...</h2>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -83,13 +82,14 @@ const Hero = () => {
         }}
       >
         <CarouselContent className="h-screen">
-          {slides.map((slide, index) => (
-            <CarouselItem key={index} className="relative h-screen">
+          {banners.map((banner, index) => (
+            <CarouselItem key={banner.id} className="relative h-screen">
               {/* Background Image */}
               <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                  backgroundImage: `url(${slide.image})`,
+                  backgroundImage: banner.image_url ? `url(${banner.image_url})` : 'none',
+                  backgroundColor: banner.image_url ? 'transparent' : '#1a1a1a'
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-burgundy/40 to-transparent" />
@@ -97,26 +97,23 @@ const Hero = () => {
 
               {/* Content */}
               <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-                <div className="max-w-3xl pt-20">
-                  {/* Doorstep Badge */}
-                  <div className="mb-8 animate-fade-in">
-                    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass-card">
-                      <Home className="h-5 w-5 text-champagne" />
-                      <span className="text-white font-semibold text-sm tracking-wide">
-                        Doorstep Beauty Services
-                      </span>
+                <div className="max-w-4xl pt-20">
+                  <div className="animate-slide-up space-y-6">
+                    {/* Banner Title */}
+                    <div className="inline-block px-8 py-6 gradient-gold rounded-xl shadow-glow-gold">
+                      <h2 className="text-3xl md:text-5xl font-bold text-white tracking-wide font-playfair">
+                        {banner.title}
+                      </h2>
                     </div>
-                  </div>
 
-                  <div className="animate-slide-up">
-                    {/* Promotional Banner Box */}
-                    <div>
-                      <div className="inline-block px-8 py-4 gradient-gold rounded-xl shadow-glow-gold">
-                        <p className="text-2xl md:text-3xl font-bold text-white tracking-wide">
-                          {slide.banner}
+                    {/* Banner Description */}
+                    {banner.description && (
+                      <div className="inline-block px-8 py-4 glass-card rounded-xl">
+                        <p className="text-xl md:text-2xl text-white/90 font-medium">
+                          {banner.description}
                         </p>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               </div>
