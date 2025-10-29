@@ -43,6 +43,7 @@ interface Appointment {
 interface Client {
   id: string;
   full_name: string;
+  phone?: string | null;
 }
 
 interface Service {
@@ -58,6 +59,7 @@ export default function Appointments() {
   const [editingAppointment, setEditingAppointment] = useState<Appointment | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [clientSearch, setClientSearch] = useState("");
   const [formData, setFormData] = useState({
     client_id: "",
     service_id: "",
@@ -92,7 +94,7 @@ export default function Appointments() {
   const fetchClients = async () => {
     const { data } = await supabase
       .from("clients")
-      .select("id, full_name")
+      .select("id, full_name, phone")
       .order("full_name");
     setClients(data || []);
   };
@@ -167,6 +169,7 @@ export default function Appointments() {
       notes: "",
     });
     setEditingAppointment(null);
+    setClientSearch("");
     setOpen(false);
   };
 
@@ -194,6 +197,15 @@ export default function Appointments() {
     return matchesSearch && matchesStatus;
   });
 
+  // Filter clients for the form dropdown
+  const filteredClients = clients.filter((client) => {
+    const searchLower = clientSearch.toLowerCase();
+    return (
+      client.full_name.toLowerCase().includes(searchLower) ||
+      client.phone?.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -217,6 +229,12 @@ export default function Appointments() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="client">Client *</Label>
+                <Input
+                  placeholder="Search client by name or phone..."
+                  value={clientSearch}
+                  onChange={(e) => setClientSearch(e.target.value)}
+                  className="mb-2"
+                />
                 <Select
                   value={formData.client_id}
                   onValueChange={(value) =>
@@ -224,15 +242,21 @@ export default function Appointments() {
                   }
                   required
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select client" />
                   </SelectTrigger>
-                  <SelectContent>
-                    {clients.map((client) => (
-                      <SelectItem key={client.id} value={client.id}>
-                        {client.full_name}
-                      </SelectItem>
-                    ))}
+                  <SelectContent className="bg-popover z-50 max-h-[300px]">
+                    {filteredClients.length === 0 ? (
+                      <div className="px-2 py-4 text-sm text-muted-foreground text-center">
+                        No clients found
+                      </div>
+                    ) : (
+                      filteredClients.map((client) => (
+                        <SelectItem key={client.id} value={client.id}>
+                          {client.full_name} {client.phone && `- ${client.phone}`}
+                        </SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -245,10 +269,10 @@ export default function Appointments() {
                   }
                   required
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select service" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-popover z-50">
                     {services.map((service) => (
                       <SelectItem key={service.id} value={service.id}>
                         {service.name}
@@ -277,10 +301,10 @@ export default function Appointments() {
                     setFormData({ ...formData, status: value })
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="bg-background">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-popover z-50">
                     <SelectItem value="scheduled">Scheduled</SelectItem>
                     <SelectItem value="confirmed">Confirmed</SelectItem>
                     <SelectItem value="completed">Completed</SelectItem>
@@ -328,10 +352,10 @@ export default function Appointments() {
             </div>
             <div className="w-full md:w-48">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="bg-background">
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-popover z-50">
                   <SelectItem value="all">All Status</SelectItem>
                   <SelectItem value="scheduled">Scheduled</SelectItem>
                   <SelectItem value="confirmed">Confirmed</SelectItem>
