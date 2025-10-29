@@ -8,6 +8,7 @@ import {
   Settings,
   LogOut,
   Sparkles,
+  UserPlus,
 } from "lucide-react";
 import {
   Sidebar,
@@ -30,6 +31,7 @@ const menuItems = [
   { title: "Clients", url: "/admin/clients", icon: Users },
   { title: "Services", url: "/admin/services", icon: Scissors },
   { title: "Appointments", url: "/admin/appointments", icon: Calendar },
+  { title: "Leads", url: "/admin/leads", icon: UserPlus },
   { title: "Reports", url: "/admin/reports", icon: FileText },
   { title: "Settings", url: "/admin/settings", icon: Settings },
 ];

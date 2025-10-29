@@ -10,6 +10,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Clients from "./pages/admin/Clients";
 import Services from "./pages/admin/Services";
 import Appointments from "./pages/admin/Appointments";
+import Leads from "./pages/admin/Leads";
 import Reports from "./pages/admin/Reports";
 import Settings from "./pages/admin/Settings";
 import NotFound from "./pages/NotFound";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="clients" element={<Clients />} />
             <Route path="services" element={<Services />} />
             <Route path="appointments" element={<Appointments />} />
+            <Route path="leads" element={<Leads />} />
             <Route path="reports" element={<Reports />} />
             <Route path="settings" element={<Settings />} />
           </Route>

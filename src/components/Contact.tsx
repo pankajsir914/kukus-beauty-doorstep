@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactInfo = [
   {
@@ -37,11 +38,32 @@ const Contact = () => {
     service: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Thank you! We'll contact you soon to confirm your appointment.");
-    setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("leads").insert({
+        full_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        service_interested: formData.service,
+        message: formData.message,
+        status: "new",
+      });
+
+      if (error) throw error;
+
+      toast.success("Thank you! We'll contact you soon to confirm your appointment.");
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+    } catch (error: any) {
+      toast.error("Failed to submit. Please try again or call us directly.");
+      console.error("Error submitting lead:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -158,8 +180,14 @@ const Contact = () => {
                     className="bg-background"
                   />
                 </div>
-                <Button type="submit" variant="premium" size="lg" className="w-full font-semibold text-lg">
-                  Book Appointment
+                <Button 
+                  type="submit" 
+                  variant="premium" 
+                  size="lg" 
+                  className="w-full font-semibold text-lg"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "Book Appointment"}
                 </Button>
               </form>
             </CardContent>
