@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
 
 interface Banner {
   id: string;
@@ -20,24 +12,21 @@ interface Banner {
 
 const BannerCarousel = () => {
   const [banners, setBanners] = useState<Banner[]>([]);
-  const [api, setApi] = useState<CarouselApi>();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     fetchBanners();
   }, []);
 
   useEffect(() => {
-    if (!api) {
-      return;
-    }
+    if (banners.length <= 1) return;
 
-    // Auto-play functionality
     const intervalId = setInterval(() => {
-      api.scrollNext();
+      setCurrentIndex((prev) => (prev + 1) % banners.length);
     }, 5000);
 
     return () => clearInterval(intervalId);
-  }, [api]);
+  }, [banners.length]);
 
   const fetchBanners = async () => {
     try {
@@ -58,6 +47,8 @@ const BannerCarousel = () => {
   if (banners.length === 0) {
     return null;
   }
+
+  const currentBanner = banners[currentIndex];
 
   const BannerContent = ({ banner }: { banner: Banner }) => (
     <div className="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-xl">
@@ -85,39 +76,37 @@ const BannerCarousel = () => {
 
   return (
     <section className="container mx-auto px-4 py-8">
-      <Carousel
-        setApi={setApi}
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        className="w-full"
-      >
-        <CarouselContent>
-          {banners.map((banner) => (
-            <CarouselItem key={banner.id}>
-              {banner.link_url ? (
-                <a
-                  href={banner.link_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block"
-                >
-                  <BannerContent banner={banner} />
-                </a>
-              ) : (
-                <BannerContent banner={banner} />
-              )}
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        {banners.length > 1 && (
-          <>
-            <CarouselPrevious className="left-4" />
-            <CarouselNext className="right-4" />
-          </>
+      <div className="relative">
+        {currentBanner.link_url ? (
+          <a
+            href={currentBanner.link_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
+            <BannerContent banner={currentBanner} />
+          </a>
+        ) : (
+          <BannerContent banner={currentBanner} />
         )}
-      </Carousel>
+        
+        {banners.length > 1 && (
+          <div className="flex justify-center gap-2 mt-4">
+            {banners.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all ${
+                  index === currentIndex
+                    ? "bg-primary w-8"
+                    : "bg-primary/30"
+                }`}
+                aria-label={`Go to banner ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 };
