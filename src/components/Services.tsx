@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Scissors, Palette, Sparkles, Crown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import hairImage from "@/assets/service-hair.jpg";
 import makeupImage from "@/assets/service-makeup.jpg";
 import skincareImage from "@/assets/service-skincare.jpg";
@@ -33,6 +35,8 @@ const services = [
 ];
 
 const Services = () => {
+  const navigate = useNavigate();
+
   return (
     <section id="services" className="py-28 bg-gradient-to-b from-background to-soft-pink/20">
       <div className="container mx-auto px-4">
@@ -82,6 +86,18 @@ const Services = () => {
               </Card>
             );
           })}
+        </div>
+
+        {/* More Button */}
+        <div className="text-center mt-16 animate-slide-up">
+          <Button 
+            variant="premium"
+            size="lg"
+            onClick={() => navigate('/services')}
+            className="font-semibold tracking-wide"
+          >
+            View All Services
+          </Button>
         </div>
       </div>
     </section>
