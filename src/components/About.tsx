@@ -191,29 +191,32 @@ const About = () => {
 
         {/* Trust & Commitment Section */}
         <div className="max-w-4xl mx-auto animate-slide-up">
-          <Card className="gradient-secondary text-white border-0 shadow-glow">
-            <CardContent className="p-12 text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 mb-6">
-                <Heart className="h-10 w-10 text-white" />
+          <Card className="relative overflow-hidden border-0 shadow-glow bg-gradient-to-br from-primary via-primary/90 to-secondary">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+            <CardContent className="relative p-12 text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm mb-6 shadow-soft">
+                <Heart className="h-10 w-10 text-white drop-shadow-lg" />
               </div>
-              <h3 className="text-3xl font-playfair font-bold mb-4">Our Commitment to You</h3>
-              <p className="text-lg leading-relaxed text-white/95 mb-6">
+              <h3 className="text-3xl md:text-4xl font-playfair font-bold mb-4 text-white drop-shadow-lg">
+                Our Commitment to You
+              </h3>
+              <p className="text-lg leading-relaxed text-white drop-shadow-md mb-8 max-w-3xl mx-auto">
                 At Kuku's Beauty Parlour, we don't just provide beauty services – we create experiences 
                 that boost confidence and celebrate individuality. Every treatment is performed with 
                 meticulous attention to detail, using only premium, branded products.
               </p>
               <div className="flex flex-wrap justify-center gap-6 text-sm font-medium">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5" />
-                  <span>100% Safe Products</span>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all">
+                  <Shield className="h-5 w-5 text-white drop-shadow-md" />
+                  <span className="text-white drop-shadow-md">100% Safe Products</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-5 w-5" />
-                  <span>Licensed Professionals</span>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all">
+                  <Sparkles className="h-5 w-5 text-white drop-shadow-md" />
+                  <span className="text-white drop-shadow-md">Licensed Professionals</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Crown className="h-5 w-5" />
-                  <span>Premium Quality</span>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all">
+                  <Crown className="h-5 w-5 text-white drop-shadow-md" />
+                  <span className="text-white drop-shadow-md">Premium Quality</span>
                 </div>
               </div>
             </CardContent>
