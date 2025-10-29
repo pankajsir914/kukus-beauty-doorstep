@@ -36,6 +36,8 @@ interface Appointment {
   appointment_date: string;
   status: string;
   notes: string | null;
+  payment_amount: number;
+  payment_status: string;
   clients: { full_name: string };
   services: { name: string };
 }
@@ -66,6 +68,8 @@ export default function Appointments() {
     appointment_date: "",
     status: "scheduled",
     notes: "",
+    payment_amount: "0",
+    payment_status: "pending",
   });
 
   useEffect(() => {
@@ -113,6 +117,7 @@ export default function Appointments() {
 
     const appointmentData = {
       ...formData,
+      payment_amount: parseFloat(formData.payment_amount) || 0,
       created_by: (await supabase.auth.getUser()).data.user?.id,
     };
 
@@ -167,6 +172,8 @@ export default function Appointments() {
       appointment_date: "",
       status: "scheduled",
       notes: "",
+      payment_amount: "0",
+      payment_status: "pending",
     });
     setEditingAppointment(null);
     setClientSearch("");
@@ -181,6 +188,8 @@ export default function Appointments() {
       appointment_date: format(new Date(appointment.appointment_date), "yyyy-MM-dd'T'HH:mm"),
       status: appointment.status,
       notes: appointment.notes || "",
+      payment_amount: appointment.payment_amount?.toString() || "0",
+      payment_status: appointment.payment_status || "pending",
     });
     setOpen(true);
   };
@@ -322,6 +331,41 @@ export default function Appointments() {
                   }
                 />
               </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="payment_amount">Payment Amount (₹)</Label>
+                  <Input
+                    id="payment_amount"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.payment_amount}
+                    onChange={(e) =>
+                      setFormData({ ...formData, payment_amount: e.target.value })
+                    }
+                    className="bg-background"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="payment_status">Payment Status</Label>
+                  <Select
+                    value={formData.payment_status}
+                    onValueChange={(value) =>
+                      setFormData({ ...formData, payment_status: value })
+                    }
+                  >
+                    <SelectTrigger className="bg-background">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover z-50">
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="partial">Partial</SelectItem>
+                      <SelectItem value="paid">Paid</SelectItem>
+                      <SelectItem value="refunded">Refunded</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
               <div className="flex gap-2">
                 <Button type="submit" variant="premium" className="flex-1">
                   {editingAppointment ? "Update" : "Add"} Appointment
@@ -372,13 +416,14 @@ export default function Appointments() {
                 <TableHead>Service</TableHead>
                 <TableHead>Date & Time</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Payment</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredAppointments.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                  <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
                     No appointments found
                   </TableCell>
                 </TableRow>
@@ -406,6 +451,24 @@ export default function Appointments() {
                     >
                       {appointment.status}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="space-y-1">
+                      <div className="font-medium">₹{appointment.payment_amount?.toLocaleString('en-IN') || 0}</div>
+                      <span
+                        className={`inline-flex px-2 py-1 rounded-full text-xs ${
+                          appointment.payment_status === "paid"
+                            ? "bg-green-500/20 text-green-500"
+                            : appointment.payment_status === "partial"
+                            ? "bg-yellow-500/20 text-yellow-500"
+                            : appointment.payment_status === "refunded"
+                            ? "bg-red-500/20 text-red-500"
+                            : "bg-gray-500/20 text-gray-500"
+                        }`}
+                      >
+                        {appointment.payment_status}
+                      </span>
+                    </div>
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-2">

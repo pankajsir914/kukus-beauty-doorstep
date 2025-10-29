@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
-import { Users, Scissors, Calendar, TrendingUp } from "lucide-react";
+import { Users, Scissors, Calendar, TrendingUp, IndianRupee, Wallet } from "lucide-react";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -9,6 +9,8 @@ export default function Dashboard() {
     totalServices: 0,
     totalAppointments: 0,
     todayAppointments: 0,
+    todayRevenue: 0,
+    monthlyRevenue: 0,
   });
 
   useEffect(() => {
@@ -32,11 +34,45 @@ export default function Dashboard() {
         .gte("appointment_date", today)
         .lt("appointment_date", `${today}T23:59:59`);
 
+      // Fetch today's revenue (only paid appointments)
+      const { data: todayAppointments } = await supabase
+        .from("appointments")
+        .select("payment_amount, payment_status")
+        .gte("appointment_date", today)
+        .lt("appointment_date", `${today}T23:59:59`)
+        .eq("payment_status", "paid");
+
+      const todayRevenue = todayAppointments?.reduce(
+        (sum, apt) => sum + (Number(apt.payment_amount) || 0),
+        0
+      ) || 0;
+
+      // Fetch monthly revenue (current month, only paid appointments)
+      const currentMonth = new Date();
+      const firstDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)
+        .toISOString().split("T")[0];
+      const lastDay = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0)
+        .toISOString().split("T")[0];
+
+      const { data: monthlyAppointments } = await supabase
+        .from("appointments")
+        .select("payment_amount, payment_status")
+        .gte("appointment_date", firstDay)
+        .lte("appointment_date", lastDay)
+        .eq("payment_status", "paid");
+
+      const monthlyRevenue = monthlyAppointments?.reduce(
+        (sum, apt) => sum + (Number(apt.payment_amount) || 0),
+        0
+      ) || 0;
+
       setStats({
         totalClients: clientsCount || 0,
         totalServices: servicesCount || 0,
         totalAppointments: appointmentsCount || 0,
         todayAppointments: todayCount || 0,
+        todayRevenue,
+        monthlyRevenue,
       });
     };
 
@@ -68,6 +104,18 @@ export default function Dashboard() {
       icon: TrendingUp,
       gradient: "from-emerald-500 to-teal-500",
     },
+    {
+      title: "Today's Revenue",
+      value: `₹${stats.todayRevenue.toLocaleString('en-IN')}`,
+      icon: IndianRupee,
+      gradient: "from-amber-500 to-orange-500",
+    },
+    {
+      title: "Monthly Revenue",
+      value: `₹${stats.monthlyRevenue.toLocaleString('en-IN')}`,
+      icon: Wallet,
+      gradient: "from-green-500 to-emerald-500",
+    },
   ];
 
   return (
@@ -79,7 +127,7 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => {
           const Icon = card.icon;
           return (
