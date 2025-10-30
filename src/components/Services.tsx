@@ -1,37 +1,40 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Scissors, Palette, Sparkles, Crown } from "lucide-react";
+import { Scissors, Palette, Sparkles, Crown, Flower2, Heart, Star, Wand2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import hairImage from "@/assets/service-hair.jpg";
-import makeupImage from "@/assets/service-makeup.jpg";
-import skincareImage from "@/assets/service-skincare.jpg";
-import bridalImage from "@/assets/service-bridal.jpg";
 
 const services = [
   {
     title: "Hair Styling",
-    description: "Professional cuts, coloring, treatments, and styling for every occasion",
     icon: Scissors,
-    image: hairImage,
   },
   {
     title: "Makeup Artistry",
-    description: "Flawless makeup for parties, events, and special occasions",
     icon: Palette,
-    image: makeupImage,
   },
   {
-    title: "Skincare & Facials",
-    description: "Rejuvenating treatments for glowing, healthy skin",
+    title: "Skincare",
     icon: Sparkles,
-    image: skincareImage,
   },
   {
     title: "Bridal Packages",
-    description: "Complete bridal beauty solutions for your special day",
     icon: Crown,
-    image: bridalImage,
+  },
+  {
+    title: "Mehendi",
+    icon: Flower2,
+  },
+  {
+    title: "Facial Treatments",
+    icon: Heart,
+  },
+  {
+    title: "Party Makeup",
+    icon: Star,
+  },
+  {
+    title: "Nail Services",
+    icon: Wand2,
   },
 ];
 
@@ -51,41 +54,22 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
-              <Card
+              <div
                 key={index}
-                className={`group overflow-hidden border-2 border-transparent hover:border-primary/30 transition-all duration-500 hover-lift cursor-pointer card-3d-hover shimmer-effect scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                className={`group flex flex-col items-center gap-3 p-4 rounded-xl hover:bg-soft-pink/30 transition-all duration-300 cursor-pointer scroll-reveal ${isVisible ? 'visible' : ''}`}
+                style={{ transitionDelay: `${index * 50}ms` }}
               >
-                  <div className="relative h-56 sm:h-64 md:h-72 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-125 group-hover:rotate-2"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-burgundy/90 via-plum/40 to-transparent" />
-                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-500" />
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 rounded-full bg-champagne/20 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
-                        <Icon className="h-6 w-6 text-champagne" />
-                      </div>
-                      <h3 className="text-2xl font-playfair font-bold text-white">
-                        {service.title}
-                      </h3>
-                    </div>
-                  </div>
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full gradient-primary flex items-center justify-center shadow-glow transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12">
+                  <Icon className="h-8 w-8 md:h-10 md:w-10 text-white" />
                 </div>
-                <CardContent className="p-6 bg-gradient-to-b from-card to-soft-pink/30">
-                  <p className="text-muted-foreground leading-relaxed">{service.description}</p>
-                  <div className="mt-4 flex items-center text-primary font-semibold text-sm group-hover:text-primary-light transition-colors">
-                    Learn More →
-                  </div>
-                </CardContent>
-              </Card>
+                <h3 className="text-sm md:text-base font-semibold text-center text-foreground group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+              </div>
             );
           })}
         </div>
