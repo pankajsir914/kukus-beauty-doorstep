@@ -11,6 +11,7 @@ import Clients from "./pages/admin/Clients";
 import Services from "./pages/admin/Services";
 import Appointments from "./pages/admin/Appointments";
 import Leads from "./pages/admin/Leads";
+import Reviews from "./pages/admin/Reviews";
 import Banners from "./pages/admin/Banners";
 import Reports from "./pages/admin/Reports";
 import Settings from "./pages/admin/Settings";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="services" element={<Services />} />
           <Route path="appointments" element={<Appointments />} />
           <Route path="leads" element={<Leads />} />
+          <Route path="reviews" element={<Reviews />} />
           <Route path="banners" element={<Banners />} />
           <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />

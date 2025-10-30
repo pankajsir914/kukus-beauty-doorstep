@@ -10,6 +10,7 @@ import {
   Sparkles,
   UserPlus,
   Image,
+  Star,
 } from "lucide-react";
 import {
   Sidebar,
@@ -33,6 +34,7 @@ const menuItems = [
   { title: "Services", url: "/admin/services", icon: Scissors },
   { title: "Appointments", url: "/admin/appointments", icon: Calendar },
   { title: "Leads", url: "/admin/leads", icon: UserPlus },
+  { title: "Reviews", url: "/admin/reviews", icon: Star },
   { title: "Banners", url: "/admin/banners", icon: Image },
   { title: "Reports", url: "/admin/reports", icon: FileText },
   { title: "Settings", url: "/admin/settings", icon: Settings },
