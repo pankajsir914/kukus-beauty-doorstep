@@ -87,13 +87,13 @@ const Hero = () => {
             <CarouselItem key={banner.id} className="relative h-[50vh] md:h-screen">
               {/* Background Image with Ken Burns effect */}
               <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-[8000ms] ease-out hover:scale-110"
+                className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-transform duration-[8000ms] ease-out hover:scale-105"
                 style={{
                   backgroundImage: banner.image_url ? `url(${banner.image_url})` : 'none',
-                  backgroundColor: banner.image_url ? 'transparent' : '#1a1a1a'
+                  backgroundColor: banner.image_url ? '#1a1a1a' : '#1a1a1a'
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-black/10 animate-fade-in" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/5 animate-fade-in" />
               </div>
             </CarouselItem>
           ))}
