@@ -64,7 +64,7 @@ const Hero = () => {
 
   if (banners.length === 0) {
     return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-soft-pink/20">
+      <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-soft-pink/20">
         <div className="text-center">
           <h2 className="text-4xl font-playfair font-bold text-muted-foreground">Loading...</h2>
         </div>
@@ -73,18 +73,18 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden">
       <Carousel
         setApi={setApi}
-        className="w-full h-screen"
+        className="w-full h-[60vh] md:h-screen"
         opts={{
           loop: true,
           align: "start",
         }}
       >
-        <CarouselContent className="h-screen">
+        <CarouselContent className="h-[60vh] md:h-screen">
           {banners.map((banner, index) => (
-            <CarouselItem key={banner.id} className="relative h-screen">
+            <CarouselItem key={banner.id} className="relative h-[60vh] md:h-screen">
               {/* Background Image with Ken Burns effect */}
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-[8000ms] ease-out hover:scale-110"
