@@ -7,12 +7,13 @@ import Testimonials from "@/components/Testimonials";
 import WriteReview from "@/components/WriteReview";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 const Index = () => {
   return (
     <div className="min-h-screen font-inter">
       <Navbar />
-      <main>
+      <main className="pb-16 md:pb-0">
         <Hero />
         <Services />
         <About />
@@ -22,6 +23,7 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
+      <MobileBottomNav />
     </div>
   );
 };
