@@ -107,19 +107,6 @@ const Contact = () => {
                 })}
               </div>
             </div>
-
-            <Card className="gradient-gold border-0 shadow-glow-gold overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-              <CardContent className="p-10 text-center relative">
-                <div className="text-6xl mb-4">✨</div>
-                <h4 className="text-3xl font-playfair font-bold mb-3 text-white">
-                  Special Offer!
-                </h4>
-                <p className="text-xl text-white font-semibold">
-                  Get 20% off on your first booking
-                </p>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Contact Form */}
