@@ -6,6 +6,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const leadSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  phone: z.string().trim().min(10, "Phone number must be at least 10 digits").max(15, "Phone number must be less than 15 digits").regex(/^[0-9+\-\s()]+$/, "Invalid phone number format"),
+  service: z.string().trim().min(1, "Service is required").max(200, "Service must be less than 200 characters"),
+  message: z.string().trim().max(1000, "Message must be less than 1000 characters").optional(),
+});
 
 const contactInfo = [
   {
@@ -44,11 +52,19 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("leads").insert({
-        full_name: formData.name,
+      // Validate form data
+      const validatedData = leadSchema.parse({
+        name: formData.name,
         phone: formData.phone,
-        service_interested: formData.service,
-        message: formData.message,
+        service: formData.service,
+        message: formData.message || undefined,
+      });
+
+      const { error } = await supabase.from("leads").insert({
+        full_name: validatedData.name,
+        phone: validatedData.phone,
+        service_interested: validatedData.service,
+        message: validatedData.message || null,
         status: "new",
       });
 
@@ -57,8 +73,14 @@ const Contact = () => {
       toast.success("Thank you! We'll contact you soon to confirm your appointment.");
       setFormData({ name: "", phone: "", service: "", message: "" });
     } catch (error: any) {
-      toast.error("Failed to submit. Please try again or call us directly.");
-      console.error("Error submitting lead:", error);
+      if (error instanceof z.ZodError) {
+        // Handle validation errors
+        const firstError = error.errors[0];
+        toast.error(firstError.message);
+      } else {
+        toast.error("Failed to submit. Please try again or call us directly.");
+        console.error("Error submitting lead:", error);
+      }
     } finally {
       setIsSubmitting(false);
     }
