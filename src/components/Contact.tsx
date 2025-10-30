@@ -96,33 +96,33 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-background to-soft-pink/30">
+    <section id="contact" className="py-8 sm:py-14 md:py-20 bg-gradient-to-b from-background to-soft-pink/30">
       <div className="container mx-auto px-3 sm:px-4">
-        <div className="text-center mb-12 md:mb-20 animate-slide-up">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-4 md:mb-6 decorative-line">
+        <div className="text-center mb-6 sm:mb-10 md:mb-14 animate-slide-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair font-bold mb-2 sm:mb-3 md:mb-4 decorative-line">
             Book Your <span className="text-gradient-primary">Appointment</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Ready to experience luxury beauty services at home? Get in touch with us today
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-10 max-w-6xl mx-auto">
           {/* Contact Info */}
-          <div className="space-y-8 animate-slide-in-left">
+          <div className="space-y-5 sm:space-y-6 animate-slide-in-left">
             <div>
-              <h3 className="text-3xl font-playfair font-bold mb-8 text-gradient-primary">Get In Touch</h3>
-              <div className="space-y-6">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-playfair font-bold mb-4 sm:mb-5 md:mb-6 text-gradient-primary">Get In Touch</h3>
+              <div className="space-y-4 sm:space-y-5">
                 {contactInfo.map((info, index) => {
                   const Icon = info.icon;
                   return (
-                    <div key={index} className="flex items-start gap-5 group">
-                      <div className="flex-shrink-0 w-14 h-14 rounded-full gradient-primary flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
-                        <Icon className="h-7 w-7 text-white" />
+                    <div key={index} className="flex items-start gap-3 sm:gap-4 group">
+                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full gradient-primary flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
+                        <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                       </div>
                       <div>
-                        <p className="font-bold text-foreground text-lg mb-1">{info.title}</p>
-                        <p className="text-muted-foreground text-base">{info.details}</p>
+                        <p className="font-bold text-foreground text-sm sm:text-base mb-0.5">{info.title}</p>
+                        <p className="text-muted-foreground text-xs sm:text-sm">{info.details}</p>
                       </div>
                     </div>
                   );
@@ -133,8 +133,8 @@ const Contact = () => {
 
           {/* Contact Form */}
           <Card className="shadow-strong border-2 border-primary/10 hover:border-primary/20 animate-slide-in-right" style={{ animationDelay: "200ms" }}>
-            <CardContent className="p-10">
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <CardContent className="p-4 sm:p-6 md:p-8">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div>
                   <Input
                     name="name"

@@ -63,11 +63,11 @@ const About = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
   
   return (
-    <section id="about" className="py-16 sm:py-20 md:py-24 bg-background" ref={elementRef}>
+    <section id="about" className="py-8 sm:py-14 md:py-18 bg-background" ref={elementRef}>
       <div className="container mx-auto px-3 sm:px-4">
         {/* Hero About Section */}
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center mb-16 md:mb-24">
-          <div className={`relative h-[300px] sm:h-[400px] md:h-[500px] rounded-2xl overflow-hidden shadow-medium scroll-reveal-left ${isVisible ? 'visible' : ''}`}>
+        <div className="grid lg:grid-cols-2 gap-5 sm:gap-8 md:gap-10 items-center mb-8 sm:mb-12 md:mb-16">
+          <div className={`relative h-[200px] sm:h-[300px] md:h-[400px] rounded-xl md:rounded-2xl overflow-hidden shadow-medium scroll-reveal-left ${isVisible ? 'visible' : ''}`}>
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop"
               alt="Professional Beauty Parlour"
@@ -80,10 +80,10 @@ const About = () => {
           </div>
           
           <div className={`scroll-reveal-right ${isVisible ? 'visible' : ''}`}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-playfair font-bold mb-4 md:mb-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-playfair font-bold mb-3 sm:mb-4 md:mb-5">
               About <span className="text-gradient-primary">Kuku's Beauty Parlour</span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-3 sm:mb-4 leading-relaxed">
               With over a decade of excellence in the beauty industry, Kuku's Beauty Parlour has been 
               the trusted choice for thousands of clients seeking professional beauty services in the 
               comfort of their homes.
@@ -101,35 +101,35 @@ const About = () => {
         </div>
 
         {/* Statistics Section */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-24">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 mb-8 sm:mb-12 md:mb-16">
           {stats.map((stat, index) => (
             <Card
               key={index}
               className={`text-center border-0 shadow-medium gradient-gold scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <CardContent className="p-8">
-                <div className="text-4xl md:text-5xl font-playfair font-bold text-white mb-2">
+              <CardContent className="p-4 sm:p-5 md:p-6">
+                <div className="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold text-white mb-1">
                   {stat.number}
                 </div>
-                <p className="text-white/90 font-medium">{stat.label}</p>
+                <p className="text-xs sm:text-sm text-white/90 font-medium">{stat.label}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Why Choose Us Section */}
-        <div className="mb-24">
-          <div className="text-center mb-16 animate-slide-up">
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+        <div className="mb-8 sm:mb-12 md:mb-16">
+          <div className="text-center mb-6 sm:mb-10 md:mb-12 animate-slide-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold mb-2 sm:mb-3">
               Why Choose <span className="text-gradient-primary">Kuku's</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Experience the perfect blend of professional expertise, premium quality, and unmatched convenience
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
@@ -138,12 +138,12 @@ const About = () => {
                   className={`text-center border-border shadow-soft hover:shadow-glow hover:scale-105 transition-all duration-500 group card-3d-hover scroll-reveal ${isVisible ? 'visible' : ''}`}
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
-                  <CardContent className="p-8">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full gradient-primary mb-6 group-hover:scale-110 transition-transform duration-500">
-                      <Icon className="h-8 w-8 text-white" />
+                  <CardContent className="p-4 sm:p-5 md:p-6">
+                    <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full gradient-primary mb-3 sm:mb-4 md:mb-5 group-hover:scale-110 transition-transform duration-500">
+                      <Icon className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-white" />
                     </div>
-                    <h3 className="text-xl font-bold mb-3 font-playfair">{feature.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                    <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 font-playfair">{feature.title}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
                   </CardContent>
                 </Card>
               );
@@ -152,21 +152,21 @@ const About = () => {
         </div>
 
         {/* Our Expertise Section */}
-        <div className="mb-24">
-          <div className="text-center mb-16 animate-slide-up">
-            <h2 className="text-4xl md:text-5xl font-playfair font-bold mb-4">
+        <div className="mb-8 sm:mb-12 md:mb-16">
+          <div className="text-center mb-6 sm:mb-10 md:mb-12 animate-slide-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold mb-2 sm:mb-3">
               Our <span className="text-gradient-primary">Expertise</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Specialized services delivered by certified professionals with passion and precision
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {expertise.map((service, index) => (
               <div
                 key={index}
-                className={`group relative h-80 rounded-2xl overflow-hidden shadow-medium hover:shadow-glow transition-all duration-500 cursor-pointer card-3d-hover glow-on-hover scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
+                className={`group relative h-44 sm:h-56 md:h-64 lg:h-72 rounded-lg sm:rounded-xl md:rounded-2xl overflow-hidden shadow-medium hover:shadow-glow transition-all duration-500 cursor-pointer card-3d-hover glow-on-hover scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <img
@@ -175,11 +175,11 @@ const About = () => {
                   className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-2 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
-                <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-                  <h3 className="text-2xl font-playfair font-bold mb-2 transform group-hover:translate-y-[-4px] transition-transform duration-500">
+                <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-5 text-white">
+                  <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-playfair font-bold mb-1 transform group-hover:translate-y-[-4px] transition-transform duration-500">
                     {service.title}
                   </h3>
-                  <p className="text-white/90 transform group-hover:translate-y-[-4px] transition-transform duration-500">
+                  <p className="text-xs sm:text-sm text-white/90 transform group-hover:translate-y-[-4px] transition-transform duration-500 line-clamp-2">
                     {service.description}
                   </p>
                   <div className="mt-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -196,14 +196,14 @@ const About = () => {
         <div className="max-w-4xl mx-auto animate-slide-up">
           <Card className="relative overflow-hidden border-0 shadow-glow bg-gradient-to-br from-primary via-primary/90 to-secondary">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
-            <CardContent className="relative p-12 text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm mb-6 shadow-soft">
-                <Heart className="h-10 w-10 text-white drop-shadow-lg" />
+            <CardContent className="relative p-5 sm:p-8 md:p-10 text-center">
+              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18 rounded-full bg-white/20 backdrop-blur-sm mb-4 sm:mb-5 shadow-soft">
+                <Heart className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 text-white drop-shadow-lg" />
               </div>
-              <h3 className="text-3xl md:text-4xl font-playfair font-bold mb-4 text-white drop-shadow-lg">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-playfair font-bold mb-3 sm:mb-4 text-white drop-shadow-lg">
                 Our Commitment to You
               </h3>
-              <p className="text-lg leading-relaxed text-white drop-shadow-md mb-8 max-w-3xl mx-auto">
+              <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white drop-shadow-md mb-4 sm:mb-6 max-w-3xl mx-auto">
                 At Kuku's Beauty Parlour, we don't just provide beauty services – we create experiences 
                 that boost confidence and celebrate individuality. Every treatment is performed with 
                 meticulous attention to detail, using only premium, branded products.

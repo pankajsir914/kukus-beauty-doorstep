@@ -58,24 +58,24 @@ const WriteReview = () => {
   };
 
   return (
-    <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-soft-pink/30 to-background">
+    <section className="py-8 sm:py-14 md:py-20 bg-gradient-to-b from-soft-pink/30 to-background">
       <div className="container mx-auto px-3 sm:px-4">
-        <div className="text-center mb-12 md:mb-16 animate-slide-up">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-4 md:mb-6 decorative-line">
+        <div className="text-center mb-6 sm:mb-10 md:mb-12 animate-slide-up">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-playfair font-bold mb-2 sm:mb-3 md:mb-4 decorative-line">
             Write Your <span className="text-gradient-primary">Review</span>
           </h2>
-          <p className="text-base md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Share your experience with us and help others discover our services
           </p>
         </div>
 
         <Card className="max-w-3xl mx-auto shadow-strong border-2 border-primary/10 hover:border-primary/20 animate-slide-in-left">
-          <CardContent className="p-6 md:p-10">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <CardContent className="p-4 sm:p-6 md:p-8">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {/* Rating */}
               <div className="text-center">
-                <p className="text-lg font-semibold mb-4">Rate Your Experience</p>
-                <div className="flex justify-center gap-2">
+                <p className="text-sm sm:text-base md:text-lg font-semibold mb-3">Rate Your Experience</p>
+                <div className="flex justify-center gap-1.5 sm:gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
                       key={star}
@@ -86,7 +86,7 @@ const WriteReview = () => {
                       className="transition-transform hover:scale-125"
                     >
                       <Star
-                        className={`h-8 w-8 md:h-10 md:w-10 transition-colors ${
+                        className={`h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 transition-colors ${
                           star <= (hoveredRating || rating)
                             ? "fill-champagne text-champagne"
                             : "text-gray-300"
@@ -129,7 +129,7 @@ const WriteReview = () => {
                   value={formData.review}
                   onChange={handleChange}
                   required
-                  rows={6}
+                  rows={5}
                   className="bg-background input-focus transition-all text-sm md:text-base"
                 />
               </div>
@@ -138,8 +138,8 @@ const WriteReview = () => {
               <Button
                 type="submit"
                 variant="premium"
-                size="lg"
-                className="w-full font-semibold text-base md:text-lg ripple glow-on-hover transition-all hover:scale-105"
+                size="default"
+                className="w-full font-semibold text-sm sm:text-base md:text-lg ripple glow-on-hover transition-all hover:scale-105"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit Review"}
