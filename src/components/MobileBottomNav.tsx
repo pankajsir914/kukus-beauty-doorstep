@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 const MobileBottomNav = () => {
   const handleWhatsAppClick = () => {
     const phoneNumber = "919876543210"; // Replace with actual number
-    const message = "Hi, I would like to book an appointment at Kuku's Beauty Parlour";
+    const message = "Hi, I would like to book an appointment at BeautyOnDoor";
     window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
   };
 

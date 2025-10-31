@@ -81,10 +81,10 @@ const About = () => {
           
           <div className={`scroll-reveal-right ${isVisible ? 'visible' : ''}`}>
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-playfair font-bold mb-3 sm:mb-4 md:mb-5">
-              About <span className="text-gradient-primary">Kuku's Beauty Parlour</span>
+              About <span className="text-gradient-primary">BeautyOnDoor</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-3 sm:mb-4 leading-relaxed">
-              With over a decade of excellence in the beauty industry, Kuku's Beauty Parlour has been 
+              With over a decade of excellence in the beauty industry, BeautyOnDoor has been 
               the trusted choice for thousands of clients seeking professional beauty services in the 
               comfort of their homes.
             </p>
@@ -122,7 +122,7 @@ const About = () => {
         <div className="mb-8 sm:mb-12 md:mb-16">
           <div className="text-center mb-6 sm:mb-10 md:mb-12 animate-slide-up">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-playfair font-bold mb-2 sm:mb-3">
-              Why Choose <span className="text-gradient-primary">Kuku's</span>
+              Why Choose <span className="text-gradient-primary">BeautyOnDoor</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Experience the perfect blend of professional expertise, premium quality, and unmatched convenience
@@ -204,7 +204,7 @@ const About = () => {
                 Our Commitment to You
               </h3>
               <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white drop-shadow-md mb-4 sm:mb-6 max-w-3xl mx-auto">
-                At Kuku's Beauty Parlour, we don't just provide beauty services – we create experiences 
+                At BeautyOnDoor, we don't just provide beauty services – we create experiences 
                 that boost confidence and celebrate individuality. Every treatment is performed with 
                 meticulous attention to detail, using only premium, branded products.
               </p>

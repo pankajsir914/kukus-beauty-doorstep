@@ -12,7 +12,7 @@ const Footer = () => {
           {/* About */}
           <div>
             <h3 className="text-2xl sm:text-3xl font-playfair font-bold text-gradient-gold mb-4 md:mb-5">
-              Kuku's Beauty Parlour
+              BeautyOnDoor
             </h3>
             <p className="text-muted-foreground leading-relaxed text-sm md:text-base mb-4 md:mb-6">
               Bringing professional beauty services to your doorstep. Experience luxury, convenience, and excellence.
@@ -87,7 +87,7 @@ const Footer = () => {
 
         <div className="pt-6 md:pt-10 border-t-2 border-primary/10 text-center">
           <p className="text-muted-foreground flex items-center justify-center gap-2 text-sm md:text-base">
-            Made with <Heart className="h-4 w-4 md:h-5 md:w-5 text-primary fill-primary animate-pulse" /> by Kuku's Beauty Parlour © 2025
+            Made with <Heart className="h-4 w-4 md:h-5 md:w-5 text-primary fill-primary animate-pulse" /> by BeautyOnDoor © 2025
           </p>
         </div>
       </div>

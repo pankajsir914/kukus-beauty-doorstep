@@ -24,7 +24,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    details: "hello@kukusbeauty.com",
+    details: "hello@beautyondoor.com",
   },
   {
     icon: MapPin,
