@@ -73,16 +73,16 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative min-h-[50vh] md:min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[50vh] md:min-h-screen flex items-center justify-center overflow-hidden w-full max-w-full">
       <Carousel
         setApi={setApi}
-        className="w-full h-[50vh] md:h-screen"
+        className="w-full h-[50vh] md:h-screen max-w-full"
         opts={{
           loop: true,
           align: "start",
         }}
       >
-        <CarouselContent className="h-[50vh] md:h-screen">
+        <CarouselContent className="h-[50vh] md:h-screen max-w-full">
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id} className="relative h-[50vh] md:h-screen">
               {/* Background Image with Ken Burns effect */}
