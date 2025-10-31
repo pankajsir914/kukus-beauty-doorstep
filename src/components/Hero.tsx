@@ -64,7 +64,7 @@ const Hero = () => {
 
   if (banners.length === 0) {
     return (
-      <section className="relative min-h-[50vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-soft-pink/20">
+      <section className="relative h-[40vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background to-soft-pink/20">
         <div className="text-center">
           <h2 className="text-4xl font-playfair font-bold text-muted-foreground">Loading...</h2>
         </div>
@@ -73,23 +73,23 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative min-h-[50vh] md:min-h-screen flex items-center justify-center overflow-hidden w-full max-w-full">
+    <section className="relative h-[40vh] md:min-h-screen flex items-center justify-center overflow-hidden w-full max-w-full">
       <Carousel
         setApi={setApi}
-        className="w-full h-[50vh] md:h-screen max-w-full"
+        className="w-full h-[40vh] md:h-screen max-w-full"
         opts={{
           loop: true,
           align: "start",
         }}
       >
-        <CarouselContent className="h-[50vh] md:h-screen max-w-full">
+        <CarouselContent className="h-[40vh] md:h-screen max-w-full">
           {banners.map((banner, index) => (
-            <CarouselItem key={banner.id} className="relative h-[50vh] md:h-screen">
+            <CarouselItem key={banner.id} className="relative h-[40vh] md:h-screen">
               <div
-                className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-500"
+                className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-opacity duration-500"
                 style={{
                   backgroundImage: banner.image_url ? `url(${banner.image_url})` : 'none',
-                  backgroundColor: banner.image_url ? '#1a1a1a' : '#1a1a1a'
+                  backgroundColor: banner.image_url ? '#f5f5f5' : '#1a1a1a'
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/5" />
