@@ -57,7 +57,7 @@ const Testimonials = () => {
             {reviews.map((review, index) => (
               <Card
                 key={review.id}
-                className={`border-2 border-primary/10 hover:border-primary/30 hover-lift relative overflow-hidden glow-on-hover scroll-reveal-${index % 2 === 0 ? 'left' : 'right'} ${isVisible ? 'visible' : ''}`}
+                className={`border-2 border-primary/10 hover:border-champagne/50 hover:shadow-glow-gold hover-lift relative overflow-hidden scroll-reveal-${index % 2 === 0 ? 'left' : 'right'} ${isVisible ? 'visible' : ''}`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary opacity-10 rounded-bl-full" />
