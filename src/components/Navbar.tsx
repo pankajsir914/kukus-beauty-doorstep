@@ -28,7 +28,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
             <h1 className="text-lg sm:text-xl md:text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
-              BEAUTYONDOOR
+              BeautyOnDoor
             </h1>
 
             {/* Right Icons & CTA */}
