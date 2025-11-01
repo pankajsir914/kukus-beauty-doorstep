@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Scissors, Palette, Sparkles, Crown, Clock, IndianRupee } from "lucide-react";
+import { Scissors, Palette, Sparkles, Crown, IndianRupee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +10,7 @@ import hairImage from "@/assets/service-hair.jpg";
 import makeupImage from "@/assets/service-makeup.jpg";
 import skincareImage from "@/assets/service-skincare.jpg";
 import bridalImage from "@/assets/service-bridal.jpg";
+import AppointmentBookingForm from "@/components/AppointmentBookingForm";
 
 // Map categories to icons and default images
 const categoryMap: Record<string, { icon: any; image: string }> = {
@@ -24,6 +25,7 @@ interface Service {
   name: string;
   description: string;
   price: number;
+  original_price: number | null;
   duration_minutes: number;
   category: string;
   image_url?: string;
@@ -33,6 +35,8 @@ interface Service {
 const ServicesPage = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     fetchServices();
@@ -55,8 +59,9 @@ const ServicesPage = () => {
     }
   };
 
-  const scrollToContact = () => {
-    window.location.href = "/#contact";
+  const handleBookNow = (serviceId: string, serviceName: string) => {
+    setSelectedService({ id: serviceId, name: serviceName });
+    setBookingOpen(true);
   };
 
   const getCategoryIcon = (category: string) => {
@@ -137,22 +142,31 @@ const ServicesPage = () => {
                           {service.description}
                         </p>
                         
-                        {/* Price & Duration */}
-                        <div className="flex items-center gap-6 mb-6">
-                          <div className="flex items-center gap-2">
-                            <IndianRupee className="h-5 w-5 text-primary" />
-                            <span className="font-semibold text-foreground">₹{service.price} onwards</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="h-5 w-5 text-primary" />
-                            <span className="font-semibold text-foreground">{service.duration_minutes} mins</span>
+                        {/* Price Display */}
+                        <div className="flex items-center gap-3 mb-6">
+                          <IndianRupee className="h-5 w-5 text-primary" />
+                          <div className="flex items-center gap-3">
+                            {service.original_price && service.original_price > service.price ? (
+                              <>
+                                <span className="text-lg text-muted-foreground line-through">
+                                  ₹{service.original_price}
+                                </span>
+                                <span className="text-2xl font-bold text-primary">
+                                  ₹{service.price}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-2xl font-bold text-primary">
+                                ₹{service.price}
+                              </span>
+                            )}
                           </div>
                         </div>
 
                         <Button 
                           variant="premium" 
                           className="w-full"
-                          onClick={scrollToContact}
+                          onClick={() => handleBookNow(service.id, service.name)}
                         >
                           Book Now
                         </Button>
@@ -171,18 +185,21 @@ const ServicesPage = () => {
               <p className="text-muted-foreground mb-8 text-lg max-w-2xl mx-auto">
                 Book an appointment today and experience luxury beauty services at your doorstep
               </p>
-              <Button 
-                variant="premium" 
-                size="lg"
-                onClick={scrollToContact}
-              >
-                Contact Us Now
-              </Button>
             </div>
           </div>
         </section>
       </main>
       <Footer />
+      
+      {/* Appointment Booking Form */}
+      {selectedService && (
+        <AppointmentBookingForm
+          open={bookingOpen}
+          onOpenChange={setBookingOpen}
+          serviceId={selectedService.id}
+          serviceName={selectedService.name}
+        />
+      )}
     </div>
   );
 };
