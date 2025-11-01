@@ -151,10 +151,10 @@ const Navbar = () => {
                 CONTACT
               </button>
               <div className="flex items-center gap-4 pt-4 border-t border-white/10">
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Facebook">
+                <a href="https://www.facebook.com/share/1D12xwfzir/" target="_blank" className="text-white hover:text-gold transition-colors p-2" aria-label="Facebook">
                   <Facebook className="h-5 w-5" />
                 </button>
-                <button className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
+                <a href="https://www.instagram.com/makeup_artist_kuku?igsh=MWp3d2cwMTU3ZWFxNQ==" target="_blank" className="text-white hover:text-gold transition-colors p-2" aria-label="Instagram">
                   <Instagram className="h-5 w-5" />
                 </button>
                 <button className="text-white hover:text-gold transition-colors p-2" aria-label="Account">
