@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${scrolled ? 'bg-black/98 shadow-strong' : 'bg-black/90 shadow-medium'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/10 transition-all duration-300 ${scrolled ? 'bg-black shadow-strong' : 'bg-black/90 shadow-medium'}`}>
       {/* Top Bar */}
       <div className="border-b border-white/10">
         <div className="container mx-auto px-4">
@@ -44,6 +44,7 @@ const Navbar = () => {
               </button>
               <Button 
                 variant="premium"
+                size="sm"
                 className="ml-2 font-semibold tracking-wide ripple glow-on-hover animate-pulse-glow animate-fade-in"
                 onClick={() => scrollToSection("contact")}
                 style={{ animationDelay: '400ms' }}
