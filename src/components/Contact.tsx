@@ -19,12 +19,12 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Phone",
-    details: "+91 98765 43210",
+    details: "+91 7617390500",
   },
   {
     icon: Mail,
     title: "Email",
-    details: "hello@beautyondoor.com",
+    details: "info.beautyondoor@gmail.com",
   },
   {
     icon: MapPin,
@@ -33,8 +33,8 @@ const contactInfo = [
   },
   {
     icon: Clock,
-    title: "Hours",
-    details: "9:00 AM - 9:00 PM (All Days)",
+    title: "Booking Hours",
+    details: "24 Hours (All Days)",
   },
 ];
 
