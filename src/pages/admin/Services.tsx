@@ -19,10 +19,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Upload, Link } from "lucide-react";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Service {
   id: string;
@@ -30,8 +31,10 @@ interface Service {
   description: string | null;
   duration_minutes: number;
   price: number;
+  original_price: number | null;
   category: string | null;
   is_active: boolean;
+  image_url: string | null;
 }
 
 export default function Services() {
@@ -43,9 +46,13 @@ export default function Services() {
     description: "",
     duration_minutes: 60,
     price: "",
+    original_price: "",
     category: "",
     is_active: true,
+    image_url: "",
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     fetchServices();
@@ -64,12 +71,49 @@ export default function Services() {
     }
   };
 
+  const handleImageUpload = async () => {
+    if (!imageFile) return null;
+
+    setUploadingImage(true);
+    const fileExt = imageFile.name.split('.').pop();
+    const fileName = `${Math.random()}.${fileExt}`;
+    const filePath = `services/${fileName}`;
+
+    const { error: uploadError, data } = await supabase.storage
+      .from('banners')
+      .upload(filePath, imageFile);
+
+    setUploadingImage(false);
+
+    if (uploadError) {
+      toast.error("Error uploading image");
+      return null;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('banners')
+      .getPublicUrl(filePath);
+
+    return publicUrl;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let imageUrl = formData.image_url;
+    
+    if (imageFile) {
+      const uploadedUrl = await handleImageUpload();
+      if (uploadedUrl) {
+        imageUrl = uploadedUrl;
+      }
+    }
 
     const serviceData = {
       ...formData,
       price: parseFloat(formData.price),
+      original_price: formData.original_price ? parseFloat(formData.original_price) : null,
+      image_url: imageUrl || null,
     };
 
     if (editingService) {
@@ -117,9 +161,12 @@ export default function Services() {
       description: "",
       duration_minutes: 60,
       price: "",
+      original_price: "",
       category: "",
       is_active: true,
+      image_url: "",
     });
+    setImageFile(null);
     setEditingService(null);
     setOpen(false);
   };
@@ -131,9 +178,12 @@ export default function Services() {
       description: service.description || "",
       duration_minutes: service.duration_minutes,
       price: service.price.toString(),
+      original_price: service.original_price?.toString() || "",
       category: service.category || "",
       is_active: service.is_active,
+      image_url: service.image_url || "",
     });
+    setImageFile(null);
     setOpen(true);
   };
 
@@ -179,25 +229,39 @@ export default function Services() {
                   }
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="duration">Duration (minutes) *</Label>
+                <Input
+                  id="duration"
+                  type="number"
+                  value={formData.duration_minutes}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      duration_minutes: parseInt(e.target.value),
+                    })
+                  }
+                  required
+                  min="1"
+                />
+              </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="duration">Duration (minutes) *</Label>
+                  <Label htmlFor="original_price">Original Price (₹)</Label>
                   <Input
-                    id="duration"
+                    id="original_price"
                     type="number"
-                    value={formData.duration_minutes}
+                    step="0.01"
+                    value={formData.original_price}
                     onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        duration_minutes: parseInt(e.target.value),
-                      })
+                      setFormData({ ...formData, original_price: e.target.value })
                     }
-                    required
-                    min="1"
+                    min="0"
+                    placeholder="Full price"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price">Price (₹) *</Label>
+                  <Label htmlFor="price">Selling Price (₹) *</Label>
                   <Input
                     id="price"
                     type="number"
@@ -208,6 +272,7 @@ export default function Services() {
                     }
                     required
                     min="0"
+                    placeholder="Current price"
                   />
                 </div>
               </div>
@@ -222,6 +287,53 @@ export default function Services() {
                   placeholder="e.g., Hair, Makeup, Skincare"
                 />
               </div>
+              <div className="space-y-2">
+                <Label>Service Image</Label>
+                <Tabs defaultValue="url" className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="url">
+                      <Link className="h-4 w-4 mr-2" />
+                      Image URL
+                    </TabsTrigger>
+                    <TabsTrigger value="upload">
+                      <Upload className="h-4 w-4 mr-2" />
+                      Upload File
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="url" className="space-y-2">
+                    <Input
+                      placeholder="https://example.com/image.jpg"
+                      value={formData.image_url}
+                      onChange={(e) =>
+                        setFormData({ ...formData, image_url: e.target.value })
+                      }
+                    />
+                  </TabsContent>
+                  <TabsContent value="upload" className="space-y-2">
+                    <Input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setImageFile(e.target.files?.[0] || null)}
+                    />
+                    {imageFile && (
+                      <p className="text-sm text-muted-foreground">
+                        Selected: {imageFile.name}
+                      </p>
+                    )}
+                  </TabsContent>
+                </Tabs>
+                {(formData.image_url || imageFile) && (
+                  <div className="mt-2">
+                    {formData.image_url && !imageFile && (
+                      <img
+                        src={formData.image_url}
+                        alt="Preview"
+                        className="w-full h-32 object-cover rounded-md"
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="is_active"
@@ -233,8 +345,13 @@ export default function Services() {
                 <Label htmlFor="is_active">Active Service</Label>
               </div>
               <div className="flex gap-2">
-                <Button type="submit" variant="premium" className="flex-1">
-                  {editingService ? "Update" : "Add"} Service
+                <Button 
+                  type="submit" 
+                  variant="premium" 
+                  className="flex-1"
+                  disabled={uploadingImage}
+                >
+                  {uploadingImage ? "Uploading..." : editingService ? "Update" : "Add"} Service
                 </Button>
                 <Button type="button" variant="outline" onClick={resetForm}>
                   Cancel
@@ -253,6 +370,7 @@ export default function Services() {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Image</TableHead>
                 <TableHead>Name</TableHead>
                 <TableHead>Category</TableHead>
                 <TableHead>Duration</TableHead>
@@ -264,10 +382,32 @@ export default function Services() {
             <TableBody>
               {services.map((service) => (
                 <TableRow key={service.id}>
+                  <TableCell>
+                    {service.image_url ? (
+                      <img
+                        src={service.image_url}
+                        alt={service.name}
+                        className="w-12 h-12 object-cover rounded-md"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 bg-muted rounded-md flex items-center justify-center text-xs text-muted-foreground">
+                        No img
+                      </div>
+                    )}
+                  </TableCell>
                   <TableCell className="font-medium">{service.name}</TableCell>
                   <TableCell>{service.category || "-"}</TableCell>
                   <TableCell>{service.duration_minutes} min</TableCell>
-                  <TableCell>₹{service.price.toFixed(2)}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-semibold">₹{service.price.toFixed(2)}</span>
+                      {service.original_price && service.original_price > service.price && (
+                        <span className="text-xs text-muted-foreground line-through">
+                          ₹{service.original_price.toFixed(2)}
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <span
                       className={`inline-flex px-2 py-1 rounded-full text-xs ${
