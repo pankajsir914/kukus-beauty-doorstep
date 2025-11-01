@@ -58,7 +58,7 @@ const Footer = () => {
             <h4 className="font-bold text-foreground text-base md:text-lg mb-4 md:mb-5">Follow Us</h4>
             <div className="flex gap-3 md:gap-4">
               <a
-                href="#"
+                href="https://www.facebook.com/share/1D12xwfzir/"
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full gradient-primary flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all hover:rotate-12 animate-bounce-in"
                 aria-label="Facebook"
                 style={{ animationDelay: '100ms' }}
@@ -66,7 +66,7 @@ const Footer = () => {
                 <Facebook className="h-4 w-4 md:h-5 md:w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/makeup_artist_kuku?igsh=MWp3d2cwMTU3ZWFxNQ=="
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full gradient-primary flex items-center justify-center text-white hover:scale-110 hover:shadow-glow transition-all hover:rotate-12 animate-bounce-in"
                 aria-label="Instagram"
                 style={{ animationDelay: '200ms' }}
