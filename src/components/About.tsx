@@ -7,10 +7,10 @@ import skincareImg from "@/assets/service-skincare.jpg";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const stats = [
-  { number: "10+", label: "Years Experience" },
-  { number: "5000+", label: "Happy Clients" },
-  { number: "50+", label: "Expert Beauticians" },
-  { number: "100+", label: "Services" },
+  { number: "03+", label: "Years Experience" },
+  { number: "500+", label: "Happy Clients" },
+  { number: "10+", label: "Expert Beauticians" },
+  { number: "50+", label: "Services" },
 ];
 
 const features = [
