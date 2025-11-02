@@ -73,20 +73,20 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative h-[40vh] md:min-h-screen flex items-center justify-center overflow-hidden w-full max-w-full">
+    <section className="relative h-[40vh] md:min-h-screen flex items-center justify-center overflow-hidden w-full p-0 m-0">
       <Carousel
         setApi={setApi}
-        className="w-full h-[40vh] md:h-screen max-w-full"
+        className="w-full h-[40vh] md:h-screen"
         opts={{
           loop: true,
           align: "start",
         }}
       >
-        <CarouselContent className="h-[40vh] md:h-screen max-w-full">
+        <CarouselContent className="h-[40vh] md:h-screen ml-0">
           {banners.map((banner, index) => (
-            <CarouselItem key={banner.id} className="relative h-[40vh] md:h-screen">
+            <CarouselItem key={banner.id} className="relative h-[40vh] md:h-screen pl-0">
               <div
-                className="absolute inset-0 bg-contain bg-center bg-no-repeat transition-opacity duration-500"
+                className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
                 style={{
                   backgroundImage: banner.image_url ? `url(${banner.image_url})` : 'none',
                   backgroundColor: banner.image_url ? '#f5f5f5' : '#1a1a1a'
