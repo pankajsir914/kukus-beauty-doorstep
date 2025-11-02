@@ -30,7 +30,7 @@ const VideoSection = () => {
               <div 
                 className="w-full h-full"
                 dangerouslySetInnerHTML={{
-                  __html: `<wistia-player media-id="${mediaId}" muted="true" autoplay="true" class="w-full h-full"></wistia-player>`
+                  __html: `<wistia-player media-id="${mediaId}" muted="true" autoplay="true" loop="true" class="w-full h-full"></wistia-player>`
                 }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
