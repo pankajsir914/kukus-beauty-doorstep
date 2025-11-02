@@ -17,37 +17,22 @@ const VideoSection = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {[
-            {
-              poster: "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=500&auto=format&fit=crop",
-              src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
-            },
-            {
-              poster: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?q=80&w=500&auto=format&fit=crop",
-              src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
-            },
-            {
-              poster: "https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=500&auto=format&fit=crop",
-              src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
-            },
-            {
-              poster: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?q=80&w=500&auto=format&fit=crop",
-              src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
-            }
-          ].map((video, index) => (
+            "8m9j1l65xz",
+            "8m9j1l65xz",
+            "8m9j1l65xz",
+            "8m9j1l65xz"
+          ].map((mediaId, index) => (
             <div 
               key={index} 
               className={`relative aspect-[9/16] rounded-2xl overflow-hidden shadow-glow bg-black hover:scale-105 hover:shadow-glow-gold transition-all duration-500 glow-on-hover scroll-reveal-scale ${isVisible ? 'visible' : ''}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <video
-                className="w-full h-full object-cover"
-                controls
-                playsInline
-                poster={video.poster}
-              >
-                <source src={video.src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              <div 
+                className="w-full h-full"
+                dangerouslySetInnerHTML={{
+                  __html: `<wistia-player media-id="${mediaId}" muted="true" autoplay="true" class="w-full h-full"></wistia-player>`
+                }}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
             </div>
           ))}
