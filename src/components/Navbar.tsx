@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Facebook, Instagram, User } from "lucide-react";
+import AppointmentBookingForm from "@/components/AppointmentBookingForm";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,7 +48,7 @@ const Navbar = () => {
                 variant="premium"
                 size="sm"
                 className="ml-2 font-semibold tracking-wide ripple glow-on-hover animate-pulse-glow animate-fade-in"
-                onClick={() => scrollToSection("contact")}
+                onClick={() => setShowBookingForm(true)}
                 style={{ animationDelay: '400ms' }}
               >
                 BOOK APPOINTMENT
@@ -177,7 +179,7 @@ const Navbar = () => {
 
               <Button 
                 className="gradient-gold w-full shadow-glow"
-                onClick={() => scrollToSection("contact")}
+                onClick={() => setShowBookingForm(true)}
               >
                 BOOK APPOINTMENT
               </Button>
@@ -185,6 +187,13 @@ const Navbar = () => {
           </div>
         </div>
       )}
+
+      <AppointmentBookingForm
+        open={showBookingForm}
+        onOpenChange={setShowBookingForm}
+        serviceId="general"
+        serviceName="General Appointment"
+      />
     </nav>
   );
 };
