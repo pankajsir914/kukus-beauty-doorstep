@@ -9,10 +9,8 @@ import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,31 +30,14 @@ const Auth = () => {
     setLoading(true);
 
     try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        
-        if (error) throw error;
-        toast.success("Login successful!");
-        navigate("/admin");
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/admin`,
-            data: {
-              full_name: fullName,
-            },
-          },
-        });
-        
-        if (error) throw error;
-        toast.success("Account created! Please check your email to verify.");
-        navigate("/admin");
-      }
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) throw error;
+      toast.success("Login successful!");
+      navigate("/admin");
     } catch (error: any) {
       toast.error(error.message || "An error occurred");
     } finally {
@@ -72,30 +53,14 @@ const Auth = () => {
             <Sparkles className="h-12 w-12 text-rose-gold" />
           </div>
           <CardTitle className="text-3xl font-playfair">
-            {isLogin ? "Welcome Back" : "Create Account"}
+            Welcome Back
           </CardTitle>
           <CardDescription>
-            {isLogin
-              ? "Sign in to access admin panel"
-              : "Register to manage your beauty parlor"}
+            Sign in to access admin panel
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleAuth} className="space-y-4">
-            {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  required={!isLogin}
-                  placeholder="Enter your full name"
-                />
-              </div>
-            )}
-            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -127,21 +92,9 @@ const Auth = () => {
               variant="premium"
               disabled={loading}
             >
-              {loading ? "Processing..." : isLogin ? "Sign In" : "Sign Up"}
+              {loading ? "Processing..." : "Sign In"}
             </Button>
           </form>
-
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => setIsLogin(!isLogin)}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {isLogin
-                ? "Don't have an account? Sign up"
-                : "Already have an account? Sign in"}
-            </button>
-          </div>
         </CardContent>
       </Card>
     </div>
