@@ -17,9 +17,9 @@ const VideoSection = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {[
-            "8m9j1l65xz",
-            "8m9j1l65xz",
-            "8m9j1l65xz",
+            "84f37zbam9",
+            "m0nbkvx7hp",
+            "mx8d7733h9",
             "8m9j1l65xz"
           ].map((mediaId, index) => (
             <div 
