@@ -144,6 +144,7 @@ export type Database = {
         Row: {
           created_at: string | null
           email: string | null
+          follow_up_date: string | null
           full_name: string
           id: string
           message: string | null
@@ -156,6 +157,7 @@ export type Database = {
         Insert: {
           created_at?: string | null
           email?: string | null
+          follow_up_date?: string | null
           full_name: string
           id?: string
           message?: string | null
@@ -168,6 +170,7 @@ export type Database = {
         Update: {
           created_at?: string | null
           email?: string | null
+          follow_up_date?: string | null
           full_name?: string
           id?: string
           message?: string | null

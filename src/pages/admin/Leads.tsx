@@ -20,8 +20,14 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Search, Phone, Mail, Calendar, MessageSquare } from "lucide-react";
-import { format } from "date-fns";
+import { Search, Phone, Mail, Calendar, MessageSquare, CalendarClock, X } from "lucide-react";
+import { format, addDays, startOfDay, endOfDay, isBefore, isToday, isPast } from "date-fns";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface Lead {
   id: string;
@@ -33,6 +39,7 @@ interface Lead {
   message: string | null;
   status: string;
   created_at: string;
+  follow_up_date: string | null;
 }
 
 const Leads = () => {
@@ -40,6 +47,7 @@ const Leads = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [followUpFilter, setFollowUpFilter] = useState("all");
 
   useEffect(() => {
     fetchLeads();
@@ -78,6 +86,27 @@ const Leads = () => {
     }
   };
 
+  const updateFollowUpDate = async (leadId: string, date: Date | null) => {
+    try {
+      const { error } = await supabase
+        .from("leads")
+        .update({ follow_up_date: date ? date.toISOString() : null })
+        .eq("id", leadId);
+
+      if (error) throw error;
+      toast.success(date ? "Follow-up date set" : "Follow-up date cleared");
+      fetchLeads();
+    } catch (error: any) {
+      toast.error("Error updating follow-up date");
+      console.error(error);
+    }
+  };
+
+  const setQuickFollowUp = async (leadId: string, days: number) => {
+    const date = addDays(new Date(), days);
+    await updateFollowUpDate(leadId, date);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "new":
@@ -93,6 +122,28 @@ const Leads = () => {
     }
   };
 
+  const getFollowUpStatus = (followUpDate: string | null) => {
+    if (!followUpDate) return "none";
+    const date = new Date(followUpDate);
+    if (isPast(date) && !isToday(date)) return "overdue";
+    if (isToday(date)) return "today";
+    return "upcoming";
+  };
+
+  const getFollowUpRowClass = (followUpDate: string | null) => {
+    const status = getFollowUpStatus(followUpDate);
+    switch (status) {
+      case "overdue":
+        return "bg-red-500/10 hover:bg-red-500/20";
+      case "today":
+        return "bg-orange-500/10 hover:bg-orange-500/20";
+      case "upcoming":
+        return "bg-green-500/5 hover:bg-green-500/10";
+      default:
+        return "";
+    }
+  };
+
   const filteredLeads = leads.filter((lead) => {
     const matchesSearch = lead.full_name
       .toLowerCase()
@@ -102,7 +153,31 @@ const Leads = () => {
     
     const matchesStatus = statusFilter === "all" || lead.status === statusFilter;
     
-    return matchesSearch && matchesStatus;
+    const followUpStatus = getFollowUpStatus(lead.follow_up_date);
+    const matchesFollowUp = 
+      followUpFilter === "all" ||
+      (followUpFilter === "due_today" && followUpStatus === "today") ||
+      (followUpFilter === "overdue" && followUpStatus === "overdue") ||
+      (followUpFilter === "upcoming" && followUpStatus === "upcoming") ||
+      (followUpFilter === "no_followup" && followUpStatus === "none");
+    
+    return matchesSearch && matchesStatus && matchesFollowUp;
+  }).sort((a, b) => {
+    // Sort by follow-up date priority: overdue -> today -> upcoming -> none
+    const statusA = getFollowUpStatus(a.follow_up_date);
+    const statusB = getFollowUpStatus(b.follow_up_date);
+    const priority = { overdue: 0, today: 1, upcoming: 2, none: 3 };
+    
+    if (priority[statusA] !== priority[statusB]) {
+      return priority[statusA] - priority[statusB];
+    }
+    
+    // If same priority, sort by follow-up date
+    if (a.follow_up_date && b.follow_up_date) {
+      return new Date(a.follow_up_date).getTime() - new Date(b.follow_up_date).getTime();
+    }
+    
+    return 0;
   });
 
   if (loading) {
@@ -118,7 +193,7 @@ const Leads = () => {
       <Card>
         <CardHeader>
           <CardTitle>Website Inquiries</CardTitle>
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
@@ -129,7 +204,7 @@ const Leads = () => {
               />
             </div>
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[180px] bg-background">
+              <SelectTrigger className="w-full sm:w-[180px] bg-background">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent className="bg-popover z-50">
@@ -138,6 +213,18 @@ const Leads = () => {
                 <SelectItem value="contacted">Contacted</SelectItem>
                 <SelectItem value="converted">Converted</SelectItem>
                 <SelectItem value="rejected">Rejected</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={followUpFilter} onValueChange={setFollowUpFilter}>
+              <SelectTrigger className="w-full sm:w-[180px] bg-background">
+                <SelectValue placeholder="Follow-up filter" />
+              </SelectTrigger>
+              <SelectContent className="bg-popover z-50">
+                <SelectItem value="all">All Follow-ups</SelectItem>
+                <SelectItem value="overdue">🔴 Overdue</SelectItem>
+                <SelectItem value="due_today">🟡 Due Today</SelectItem>
+                <SelectItem value="upcoming">🟢 Upcoming</SelectItem>
+                <SelectItem value="no_followup">⚪ No Follow-up</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -156,6 +243,7 @@ const Leads = () => {
                   <TableHead>Service</TableHead>
                   <TableHead>Preferred Date</TableHead>
                   <TableHead>Message</TableHead>
+                  <TableHead>Follow-Up Date</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Received</TableHead>
                   <TableHead>Actions</TableHead>
@@ -163,7 +251,7 @@ const Leads = () => {
               </TableHeader>
               <TableBody>
                 {filteredLeads.map((lead) => (
-                  <TableRow key={lead.id}>
+                  <TableRow key={lead.id} className={getFollowUpRowClass(lead.follow_up_date)}>
                     <TableCell className="font-medium">
                       {lead.full_name}
                     </TableCell>
@@ -203,6 +291,86 @@ const Leads = () => {
                       ) : (
                         "-"
                       )}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        {lead.follow_up_date ? (
+                          <>
+                            <div className="flex items-center gap-1 text-sm">
+                              <CalendarClock className="h-3 w-3" />
+                              <span className={
+                                getFollowUpStatus(lead.follow_up_date) === "overdue" 
+                                  ? "text-red-600 font-semibold"
+                                  : getFollowUpStatus(lead.follow_up_date) === "today"
+                                  ? "text-orange-600 font-semibold"
+                                  : "text-green-600"
+                              }>
+                                {format(new Date(lead.follow_up_date), "MMM dd, yyyy")}
+                              </span>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-6 w-6 p-0"
+                              onClick={() => updateFollowUpDate(lead.id, null)}
+                            >
+                              <X className="h-3 w-3" />
+                            </Button>
+                          </>
+                        ) : (
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button variant="outline" size="sm">
+                                <CalendarClock className="h-4 w-4 mr-2" />
+                                Set Follow-up
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                              <div className="p-3 space-y-2 border-b">
+                                <p className="text-sm font-medium">Quick Actions</p>
+                                <div className="flex flex-wrap gap-2">
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setQuickFollowUp(lead.id, 1)}
+                                  >
+                                    +1 Day
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setQuickFollowUp(lead.id, 3)}
+                                  >
+                                    +3 Days
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setQuickFollowUp(lead.id, 7)}
+                                  >
+                                    +7 Days
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setQuickFollowUp(lead.id, 15)}
+                                  >
+                                    +15 Days
+                                  </Button>
+                                </div>
+                              </div>
+                              <CalendarComponent
+                                mode="single"
+                                selected={undefined}
+                                onSelect={(date) => date && updateFollowUpDate(lead.id, date)}
+                                disabled={(date) => isBefore(date, startOfDay(new Date()))}
+                                initialFocus
+                                className="pointer-events-auto"
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell>
                       <Badge className={getStatusColor(lead.status)}>
