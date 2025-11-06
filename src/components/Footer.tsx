@@ -1,6 +1,7 @@
 import { Facebook, Instagram, Twitter, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const { elementRef, isVisible } = useIntersectionObserver({ threshold: 0.1 });
@@ -11,9 +12,16 @@ const Footer = () => {
         <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mb-8 md:mb-12 scroll-reveal ${isVisible ? 'visible' : ''}`}>
           {/* About */}
           <div>
-            <h3 className="text-2xl sm:text-3xl font-playfair font-bold text-gradient-gold mb-4 md:mb-5">
-              BeautyOnDoor
-            </h3>
+            <div className="flex items-center gap-3 mb-4 md:mb-5">
+              <img 
+                src={logo} 
+                alt="BeautyOnDoor Logo" 
+                className="h-12 w-12 sm:h-14 sm:w-14 object-contain"
+              />
+              <h3 className="text-2xl sm:text-3xl font-playfair font-bold text-gradient-gold">
+                BeautyOnDoor
+              </h3>
+            </div>
             <p className="text-muted-foreground leading-relaxed text-sm md:text-base mb-4 md:mb-6">
               Bringing professional beauty services to your doorstep. Experience luxury, convenience, and excellence.
             </p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Facebook, Instagram, User } from "lucide-react";
 import AppointmentBookingForm from "@/components/AppointmentBookingForm";
+import logo from "@/assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,9 +30,16 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-18">
             {/* Logo */}
-            <h1 className="text-lg sm:text-xl md:text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
-              BeautyOnDoor
-            </h1>
+            <div className="flex items-center gap-3">
+              <img 
+                src={logo} 
+                alt="BeautyOnDoor Logo" 
+                className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 object-contain animate-fade-in hover:scale-105 transition-transform cursor-pointer"
+              />
+              <h1 className="text-lg sm:text-xl md:text-2xl font-playfair font-bold text-gradient-gold tracking-wide animate-fade-in hover:scale-105 transition-transform cursor-pointer">
+                BeautyOnDoor
+              </h1>
+            </div>
 
             {/* Right Icons & CTA */}
             <div className="hidden md:flex items-center gap-4">
