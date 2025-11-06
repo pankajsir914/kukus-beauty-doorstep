@@ -52,13 +52,13 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-            <Button 
+            {/* <Button 
               variant="outline"
               className="mt-4 md:mt-6 font-semibold tracking-wide text-sm"
               onClick={() => window.location.href = "/auth"}
             >
               ADMIN LOGIN
-            </Button>
+            </Button> */}
           </div>
 
           {/* Social Media */}
